@@ -1,75 +1,89 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Cannon : MonoBehaviour
 {
+    [Header("Player Stats")]
+    [SerializeField] private Player playerStats;
+
+    [Header("Input Event Channel")]
+    [SerializeField] private InputEventChannelSO inputEventChannel;
+
+    [Header("Elevation Settings")]
     public float rotationSpeed;
     public float accelerationTime;
     public float decelerationTime;
     public float maxElevation;
     public float maxDepression;
-    [SerializeField] private Player playerStats;
-    [SerializeField] private GameInput gameInput;
-    Transform thisTransform;
-    Transform turretBaseTransform;
-    Transform parentTransform;
-    float angleX;
-    Vector3 currentLocalAngles;
-    float elevateDir;
-    float elevateRate;
-    bool isElevating = false;
-    public void UpdateElevationstats()
+
+    // internals
+    private Transform thisTransform;
+    private float angleX;
+    private Vector3 currentLocalAngles;
+    private float elevateDir;
+    private float elevateRate;
+
+    void Start()
     {
-        //get Playerstats
+        Initialize();
+    }
+
+    void Initialize()
+    {
+        UpdateElevationStats();
+        thisTransform = transform;
+        currentLocalAngles = thisTransform.localEulerAngles;
+        angleX = currentLocalAngles.x;
+
+        // setup range
+        maxElevation = angleX - playerStats.maxElevation;
+        maxDepression = angleX + playerStats.maxDepression;
+    }
+    public void SetElevateDirection(float input)
+    {
+        elevateDir = input;
+    }
+
+    public void UpdateElevationStats()
+    {
         rotationSpeed = playerStats.elevationSpeed;
         accelerationTime = playerStats.elevateAccelerationTime;
         decelerationTime = playerStats.elevateDecelerationTime;
-
-
     }
-    void Initialize()
-        {
-            UpdateElevationstats();
-             maxElevation = playerStats.maxElevation;
-             maxDepression = playerStats.maxDepression;
-             thisTransform = transform;
-            turretBaseTransform = thisTransform.parent;
-            currentLocalAngles = thisTransform.localEulerAngles;
-            angleX = currentLocalAngles.x;
-            maxElevation = angleX - maxElevation;
-            maxDepression = angleX + maxDepression;
-            elevateDir = gameInput.GetMovementVectorNormalized().y;
-        }
-    void Start()
+
+    private void OnEnable()
     {
-       Initialize();
+        if (inputEventChannel != null)
+            inputEventChannel.OnGunElevate += HandleGunInput;
     }
-    
-    public void ElevationAnabled()
+
+    private void OnDisable()
     {
-                if (elevateDir != 0.0f)
+        if (inputEventChannel != null)
+            inputEventChannel.OnGunElevate -= HandleGunInput;
+    }
+
+    private void HandleGunInput(float inputY)
+    {
+        elevateDir = inputY;
+    }
+
+    void FixedUpdate()
+    {
+        if (elevateDir != 0.0f)
         {
             elevateRate = Mathf.MoveTowards(elevateRate, elevateDir, Time.fixedDeltaTime / accelerationTime);
         }
         else
         {
-            elevateRate = Mathf.MoveTowards(elevateRate, elevateDir, Time.fixedDeltaTime / decelerationTime);
+            elevateRate = Mathf.MoveTowards(elevateRate, 0.0f, Time.fixedDeltaTime / decelerationTime);
         }
-        if (elevateRate == 0.0f)
-        {
-            isElevating = false;
-        }    
 
-            elevateDir = gameInput.GetMovementVectorNormalized().y;
-            angleX -= rotationSpeed * elevateRate * Time.fixedDeltaTime;
-            
+        angleX -= rotationSpeed * elevateRate * Time.fixedDeltaTime;
+
         if (angleX <= maxDepression && angleX >= maxElevation)
         {
-            isElevating = true;
             currentLocalAngles.x = angleX;
-            thisTransform.localEulerAngles = currentLocalAngles; 
+            thisTransform.localEulerAngles = currentLocalAngles;
         }
         else
         {
@@ -80,8 +94,6 @@ public class Cannon : MonoBehaviour
                 currentLocalAngles.x = angleX;
                 thisTransform.localEulerAngles = currentLocalAngles;
                 Debug.Log("out of range");
-                isElevating = false;
-
             }
             if (angleX < maxElevation)
             {
@@ -89,16 +101,7 @@ public class Cannon : MonoBehaviour
                 currentLocalAngles.x = angleX;
                 thisTransform.localEulerAngles = currentLocalAngles;
                 Debug.Log("out of range");
-                isElevating = false;
             }
-
         }
     }
-    void Update()
-    {
-
-    }
 }
-
-    
-

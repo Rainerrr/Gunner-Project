@@ -80,17 +80,12 @@ public class MinimapBehavior : MonoBehaviour
         // Enable/disable player inputs
         if (isZoomed)
         {
-            playerController.DisableFireInput();
-            playerController.DisableLaserInput();
-            playerController.DisableZoomInput();
-            playerController.DisableAmmoInput();
+            playerController.DisableInputs();
+
         }
         else
         {
-            playerController.EnableFireInput();
-            playerController.EnableLaserInput();
-            playerController.EnableZoomInput();
-            playerController.EnableAmmoInput();
+            playerController.EnableInputs();
         }
     }
 }

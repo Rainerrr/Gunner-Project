@@ -1,125 +1,100 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [Header("Cannon movement settings")]
-    [Tooltip("Elevation speed. (Degree per second)")] public float elevationSpeed = 10.0f;
-    [Tooltip("Time to reach the maximum speed from zero. (Sec)")] public float elevateAccelerationTime = 0.2f;
-    [Tooltip("Time to stop from the maximum speed. (Sec)")] public float elevateDecelerationTime = 0.2f;
-    [Tooltip("Maximum elevation angle. (Degree)")] public float maxElevation = 15.0f;
-    [Tooltip("Maximum depression angle. (Degree)")] public float maxDepression = 10.0f;
-
-    [Header("Turret movement settings")]
-    [Tooltip("Maximum rotation speed. (Degree per Second)")] public float horizontalRotationSpeed = 20.0f;
-    [Tooltip("Time to reach the maximum speed from zero. (Sec)")] public float horizontalAccelerationTime = 0.05f;
-    [Tooltip("Time to stop from the maximum speed. (Sec)")] public float horizontalDecelerationTime = 0.3f;
-    [Tooltip("Is movement enabled")] private bool isMovementEnabled = false;
-    [SerializeField] private Cannon elevation;
-    [SerializeField] private Turret horizontal;
-    [SerializeField] private ChobiAssets.KTP.Wheel_Control_CS wheelControl;
-    [SerializeField] private GameInput gameInput;
+    [Header("References")]
+    [SerializeField] private InputEventChannelSO inputEventChannel;
     [SerializeField] private Turret turret;
     [SerializeField] private Cannon cannon;
     [SerializeField] private ZoomControl zoomControl;
     [SerializeField] private RangeFind rangeFind;
     [SerializeField] private AmmoControl ammoControl;
-    [SerializeField] private FireEvent FireEvent;
+    [SerializeField] private FireEvent fireEvent;
+    [SerializeField] private ChobiAssets.KTP.Wheel_Control_CS wheelControl;
 
-    public void UpdateMovementStats()
+    [Header("Cannon movement settings")]
+    public float elevationSpeed = 10.0f;
+    public float elevateAccelerationTime = 0.2f;
+    public float elevateDecelerationTime = 0.2f;
+    public float maxElevation = 15.0f;
+    public float maxDepression = 10.0f;
+
+    [Header("Turret movement settings")]
+    public float horizontalRotationSpeed = 20.0f;
+    public float horizontalAccelerationTime = 0.05f;
+    public float horizontalDecelerationTime = 0.3f;
+
+    private bool isMovementEnabled = false;
+
+    private void Start()
     {
-        horizontal.UpdateHorizontalStats();
-        elevation.UpdateElevationstats();
+        // init zoom control (for FOV and crosshair)
+        zoomControl.crosshair.scaleFactor = zoomControl.baseCrosshairScaleMultiplier;
+        zoomControl.cinemachineVirtualCamera.m_Lens.FieldOfView = zoomControl.firstZoomFov;
+
+        // subscribe to input events
+        EnableInputs();
     }
-    public void EnableMovementInput()
+
+    private void OnDestroy()
     {
+        DisableInputs();
+    }
+
+    public void EnableInputs()
+    {
+        inputEventChannel.OnFire += fireEvent.Fire;
+        inputEventChannel.OnRangeFound += rangeFind.FindRange;
+        inputEventChannel.OnZoom += zoomControl.HandleZoomInput;
+        inputEventChannel.OnAmmoChange += ammoControl.HandleAmmoInput;
+        inputEventChannel.OnTurretRotate += HandleTurretRotate;
+        inputEventChannel.OnGunElevate += HandleGunElevate;
+
         isMovementEnabled = true;
     }
 
-    public void DisableMovementInput()
+    public void DisableInputs()
     {
+        inputEventChannel.OnFire -= fireEvent.Fire;
+        inputEventChannel.OnRangeFound -= rangeFind.FindRange;
+        inputEventChannel.OnZoom -= zoomControl.HandleZoomInput;
+        inputEventChannel.OnAmmoChange -= ammoControl.HandleAmmoInput;
+        inputEventChannel.OnTurretRotate -= HandleTurretRotate;
+        inputEventChannel.OnGunElevate -= HandleGunElevate;
+
         isMovementEnabled = false;
     }
-    public void EnableLaserInput()
+
+    /// <summary>
+    /// Called by InputEventChannel when X-axis input is received.
+    /// </summary>
+    private void HandleTurretRotate(float inputX)
     {
-        if (gameInput != null)
+        if (!isMovementEnabled) return;
+        if (turret != null)
         {
-            gameInput.OnLaserInput += rangeFind.FindRange;
-        }
-    }
-    public void DisableLaserInput()
-    {
-        if (gameInput != null)
-        {
-            gameInput.OnLaserInput -= rangeFind.FindRange;
-        }
-    }
-    public void EnableFireInput()
-    {
-        if (gameInput != null)
-        {
-            gameInput.OnFireInput += FireEvent.Fire;
-        }
-    }
-    public void DisableFireInput()
-    {
-        if (gameInput != null)
-        {
-            gameInput.OnFireInput -= FireEvent.Fire;
+            turret.SetTurnDirection(inputX);
         }
     }
 
-    public void EnableZoomInput()
+    /// <summary>
+    /// Called by InputEventChannel when Y-axis input is received.
+    /// </summary>
+    private void HandleGunElevate(float inputY)
     {
-        if (gameInput != null)
+        if (!isMovementEnabled) return;
+        if (cannon != null)
         {
-            gameInput.OnZoomInput += zoomControl.HandleZoomInput;
+            cannon.SetElevateDirection(inputY);
         }
     }
-    public void DisableZoomInput()
+
+    /// <summary>
+    /// Updates stats to the turret and cannon from the Player values.
+    /// </summary>
+    public void UpdateMovementStats()
     {
-        if (gameInput != null)
-        {
-            gameInput.OnZoomInput -= zoomControl.HandleZoomInput;
-        }
-    }
-    public void EnableAmmoInput()
-    {
-        if (gameInput != null)
-        {
-            gameInput.OnAmmoInput += ammoControl.HandleAmmoInput;
-        }
-    }
-    public void DisableAmmoInput()
-    {
-        if (gameInput != null)
-        {
-            gameInput.OnAmmoInput -= ammoControl.HandleAmmoInput;
-        }
-    }
-    private void Start()
-    {
-        zoomControl.crosshair.scaleFactor = zoomControl.baseCrosshairScaleMultiplier;
-        zoomControl.cinemachineVirtualCamera.m_Lens.FieldOfView = zoomControl.firstZoomFov;
-        EnableZoomInput();
-        EnableAmmoInput();
-        EnableLaserInput();
-        EnableFireInput();
-        EnableMovementInput();
-    }
-    private void Update()
-    {
-        turret.HorizontalEnabled();
-        cannon.ElevationAnabled();
-        if (isMovementEnabled && gameInput != null && wheelControl != null && wheelControl.isSelected)
-        {
-            wheelControl.moveAxis = gameInput.GetwheelMovementVectorNormalized();
-        }
-        else if (wheelControl != null)
-        {
-            wheelControl.moveAxis = Vector2.zero;
-        }
+        if (turret != null) turret.UpdateHorizontalStats();
+        if (cannon != null) cannon.UpdateElevationStats();
     }
 }

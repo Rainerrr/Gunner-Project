@@ -1,28 +1,47 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Playables;
 
 public class Turret : MonoBehaviour
-
 {
+    [Header("Player Stats")]
     [SerializeField] private Player playerStats;
 
-        public float rotationSpeed;
-        public float accelerationTime;
-        public float decelerationTime;
-        [SerializeField] private GameInput gameInput;
-        Transform thisTransform;
-        Transform parentTransform;
-        float angleY;
-        Vector3 currentLocalAngles;
-        float turnDirection;
-        float turnRate;
+    [Header("Input Event Channel")]
+    [SerializeField] private InputEventChannelSO inputEventChannel;
 
+    [Header("Rotation Settings")]
+    public float rotationSpeed;
+    public float accelerationTime;
+    public float decelerationTime;
+
+    [Header("Auto Rotate")]
     [SerializeField] private AzimuthFind azimuthSystem;
     private bool isAutoRotating = false;
     private float targetAzimuthMil;
-    private float azimuthTolerance = 5f; // Mils tolerance
+    private float azimuthTolerance = 5f;
+
+    // internals
+    private Transform thisTransform;
+    private float angleY;
+    private Vector3 currentLocalAngles;
+    private float turnDirection;
+    private float turnRate;
+
+    void Start()
+    {
+        Init();
+    }
+
+    void Init()
+    {
+        UpdateHorizontalStats();
+        thisTransform = transform;
+        currentLocalAngles = thisTransform.localEulerAngles;
+        angleY = currentLocalAngles.y;
+    }
+    public void SetTurnDirection(float input)
+    {
+        turnDirection = input;
+    }
 
     public void UpdateHorizontalStats()
     {
@@ -30,29 +49,35 @@ public class Turret : MonoBehaviour
         accelerationTime = playerStats.horizontalAccelerationTime;
         decelerationTime = playerStats.horizontalDecelerationTime;
     }
-    void Init()
-    {
-        UpdateHorizontalStats();
 
-        thisTransform = transform;
-        parentTransform = thisTransform.parent;
-        currentLocalAngles = thisTransform.localEulerAngles;
-        angleY = currentLocalAngles.y;
-
-
-    }
     public void RotateToTarget(Target target)
     {
-        Transform targetTransform = target.transform;
         isAutoRotating = true;
-        // Calculate azimuth to target
         targetAzimuthMil = target.azimuth;
     }
-    public void HorizontalEnabled()
+
+    private void OnEnable()
+    {
+        if (inputEventChannel != null)
+            inputEventChannel.OnTurretRotate += HandleTurretInput;
+    }
+
+    private void OnDisable()
+    {
+        if (inputEventChannel != null)
+            inputEventChannel.OnTurretRotate -= HandleTurretInput;
+    }
+
+    private void HandleTurretInput(float inputX)
+    {
+        turnDirection = inputX;
+    }
+
+    void FixedUpdate()
     {
         if (isAutoRotating)
         {
-            float currentAzimuth = azimuthSystem.CalculateCamaraAzimuth(); 
+            float currentAzimuth = azimuthSystem.CalculateCamaraAzimuth();
             float delta = Mathf.DeltaAngle(
                 currentAzimuth * (360f / 6400f),
                 targetAzimuthMil * (360f / 6400f)
@@ -70,31 +95,19 @@ public class Turret : MonoBehaviour
 
             turnDirection = dir;
         }
-        else
-        {
-            turnDirection = gameInput.GetMovementVectorNormalized().x;
-        }
+
+        // smooth turn
         if (turnDirection != 0.0f)
         {
             turnRate = Mathf.MoveTowards(turnRate, turnDirection, Time.fixedDeltaTime / accelerationTime);
         }
         else
         {
-            turnRate = Mathf.MoveTowards(turnRate, turnDirection, Time.fixedDeltaTime / decelerationTime);
+            turnRate = Mathf.MoveTowards(turnRate, 0.0f, Time.fixedDeltaTime / decelerationTime);
         }
-        if (turnRate == 0.0f)
-        {
-        }
-        turnDirection = gameInput.GetMovementVectorNormalized().x;
+
         angleY += rotationSpeed * turnRate * Time.fixedDeltaTime;
         currentLocalAngles.y = angleY;
         thisTransform.localEulerAngles = currentLocalAngles;
-    }
-    void Start()
-    {
-        Init();
-    }
-    void Update()
-    {
     }
 }
