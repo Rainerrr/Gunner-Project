@@ -168,6 +168,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26f117cbf6f5a25479ae719030c7b56e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputEventChannel: {fileID: 11400000, guid: 821fec34619d71f48b124fab8579e6bc, type: 2}
+  turret: {fileID: 1841528590}
+  cannon: {fileID: 603733687}
+  zoomControl: {fileID: 868294644}
+  rangeFind: {fileID: 683439295}
+  ammoControl: {fileID: 683439297}
+  fireEvent: {fileID: 683439299}
+  wheelControl: {fileID: 660034005}
   elevationSpeed: 15
   elevateAccelerationTime: 0.22
   elevateDecelerationTime: 0.1
@@ -176,16 +184,6 @@ MonoBehaviour:
   horizontalRotationSpeed: 20
   horizontalAccelerationTime: 0.31
   horizontalDecelerationTime: 0.12
-  elevation: {fileID: 603733687}
-  horizontal: {fileID: 1841528590}
-  wheelControl: {fileID: 660034005}
-  gameInput: {fileID: 1439359774}
-  turret: {fileID: 1841528590}
-  cannon: {fileID: 603733687}
-  zoomControl: {fileID: 868294644}
-  rangeFind: {fileID: 683439295}
-  ammoControl: {fileID: 683439297}
-  FireEvent: {fileID: 683439299}
 --- !u!4 &40565401 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1301145089138318173, guid: 9005846b476cf224d96a32b17caf94da,
@@ -1016,15 +1014,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 433336921}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d59dd0f9afe38a840903cac17f5b6408, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rangeFind: {fileID: 683439295}
+  rangeData: {fileID: 0}
   barrel: {fileID: 868294642}
-  endpointRange: 0
-  lockTrajectoryflag: 0
+  lockTrajectoryFlag: 0
 --- !u!4 &558160377 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 413240, guid: 5c0378b47d76c394dbb09985cf5dc360,
@@ -1049,13 +1046,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db1e02b5a9692f346b6d0cde83d7f59c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerStats: {fileID: 15690761}
+  inputEventChannel: {fileID: 0}
   rotationSpeed: 10
   accelerationTime: 0.2
   decelerationTime: 0.2
   maxElevation: -30
   maxDepression: 17
-  playerStats: {fileID: 15690761}
-  gameInput: {fileID: 1439359774}
 --- !u!1 &613583377
 GameObject:
   m_ObjectHideFlags: 0
@@ -1268,17 +1265,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6297e8816336534699aa582159dafa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputEventChannel: {fileID: 11400000, guid: 821fec34619d71f48b124fab8579e6bc, type: 2}
+  rangeData: {fileID: 11400000, guid: d46c4479fe7ee4645905b4d5da8121d6, type: 2}
   playerCamera: {fileID: 963194227}
-  gui: {fileID: 1223977448}
-  mapContentBehavior: {fileID: 1272894680}
-  FireEndpoint: {fileID: 433336927}
-  isSrak: 0
-  ballisticCurve: {fileID: 1299182000}
-  minObjectTransform: {fileID: 1060695885}
-  maxObjectTransform: {fileID: 1933716089}
-  minRange: 10
-  maxRange: 5000
-  currentRange: 0
 --- !u!114 &683439297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1304,6 +1293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f72b93468983a394099a5f8534523fb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rangeData: {fileID: 11400000, guid: d46c4479fe7ee4645905b4d5da8121d6, type: 2}
   shellPrefab: {fileID: 3026866025891008728, guid: a859daa56100c3548a1cc27e736a6c15,
     type: 3}
   ballisticCurve: {fileID: 1299182001}
@@ -2718,6 +2708,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1197692045}
+  - component: {fileID: 1197692046}
   m_Layer: 0
   m_Name: LevelSettings
   m_TagString: Untagged
@@ -2743,6 +2734,22 @@ Transform:
   - {fileID: 1246648251}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1197692046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1197692044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 115d2ca6692b9924d9086527c6949961, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minRangeTransform: {fileID: 1060695885}
+  maxRangeTransform: {fileID: 1933716089}
+  rangeData: {fileID: 11400000, guid: d46c4479fe7ee4645905b4d5da8121d6, type: 2}
+  playerCamera: {fileID: 0}
 --- !u!1 &1198220327
 GameObject:
   m_ObjectHideFlags: 0
@@ -2931,7 +2938,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   azimuthGui: {fileID: 373334794}
   rangeGui: {fileID: 1403203075}
-  ammogui: {fileID: 1903447742}
+  ammoGui: {fileID: 1903447742}
+  rangeData: {fileID: 11400000, guid: d46c4479fe7ee4645905b4d5da8121d6, type: 2}
 --- !u!1 &1246648250
 GameObject:
   m_ObjectHideFlags: 0
@@ -3242,9 +3250,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   A: {fileID: 683439294}
-  curveOffset: 12.27
   B: {fileID: 433336925}
   Control: {fileID: 346944556}
+  LastLaser: {fileID: 2039807700}
+  curveOffset: 12.27
+  rangeData: {fileID: 11400000, guid: d46c4479fe7ee4645905b4d5da8121d6, type: 2}
 --- !u!1 &1336308545
 GameObject:
   m_ObjectHideFlags: 0
@@ -3653,6 +3663,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5a9e4762ba255149a7e8afb6b7636c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputEventChannel: {fileID: 11400000, guid: 821fec34619d71f48b124fab8579e6bc, type: 2}
 --- !u!4 &1439359775
 Transform:
   m_ObjectHideFlags: 0
@@ -4601,10 +4612,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStats: {fileID: 15690761}
+  inputEventChannel: {fileID: 0}
   rotationSpeed: 9.5
   accelerationTime: 1
   decelerationTime: 1.5
-  gameInput: {fileID: 1439359774}
   azimuthSystem: {fileID: 683439301}
 --- !u!1001 &1857192790
 PrefabInstance:
