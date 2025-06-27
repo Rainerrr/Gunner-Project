@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FireEvent : MonoBehaviour
 {
+    [SerializeField] private RangeDataSO rangeData;
     [SerializeField] GameObject shellPrefab;
     [SerializeField] public BallisticCurve ballisticCurve;
     [SerializeField] public RangeFind rangeFind;
@@ -13,7 +14,7 @@ public class FireEvent : MonoBehaviour
         return obj;
     }
     public void Fire(float input){
-        if (!rangeFind.isSrak)
+        if (!rangeData.isSrak)
         {
             FireEndpoint fireEndpoint = ballisticCurve.GetComponentInChildren<FireEndpoint>();
             fireEndpoint.LockTrajectory();

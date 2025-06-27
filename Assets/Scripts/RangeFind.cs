@@ -1,128 +1,76 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 public class RangeFind : MonoBehaviour
 {
+    [Header("Dependencies")]
+    [SerializeField] private InputEventChannelSO inputEventChannel;
+    [SerializeField] private RangeDataSO rangeData;
     [SerializeField] private Camera playerCamera;
-    [SerializeField] private UpdateGui gui;
-    [SerializeField] private MapContentBehavior mapContentBehavior;
-    [SerializeField] private FireEndpoint FireEndpoint;
 
-    public bool isSrak;
-    private int srak = 0;
-    private GameObject lastDebugRay;
-    private Tuple<float, float> rangePreset;
-    [SerializeField] private Transform ballisticCurve;
-    [SerializeField] private Transform minObjectTransform;
-    [SerializeField] private Transform maxObjectTransform;
-    [SerializeField] private float minRange = 10;
-    [SerializeField] private float maxRange = 5000;
-    public int currentRange;
-    public Tuple<float, float> SetRangePreset(Transform min, Transform Max) //sets the furthest and closest point the player can find the range to
+    private void Start()
     {
-        float minObjectDistance = Vector3.Distance(playerCamera.transform.position, minObjectTransform.position);
-        float maxObjectDistance = Vector3.Distance(playerCamera.transform.position, maxObjectTransform.position);
-        Tuple<float, float> rangePreset = Tuple.Create(minObjectDistance, maxObjectDistance);
-        return rangePreset;
-    }
-
-    int NormalizeRange(float value, Tuple<float, float> rangePreset)
-    {
-        if (value < rangePreset.Item1 || value > rangePreset.Item2)
+        // Auto-find camera if not set
+        if (playerCamera == null)
         {
-            gui.UpdateRange(srak);
-            return 0;
+            playerCamera = Camera.main;
+            if (playerCamera == null)
+            {
+                Debug.LogError("RangeFind: No player camera found with tag MainCamera.");
+            }
         }
-        float t = (value - rangePreset.Item1) / (rangePreset.Item2 - rangePreset.Item1);// normalize 0–1
-        int result = Mathf.RoundToInt(Mathf.Lerp(minRange, maxRange, t));// interpolate output
-        return result;
     }
+
+    public void OnRangeRequest(float _)
+    {
+        if (playerCamera == null)
+        {
+            Debug.LogError("RangeFind: playerCamera is null, cannot measure range.");
+            return;
+        }
+
+        Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            rangeData.UpdateRange(hit.distance, playerCamera.transform);
+            Debug.DrawLine(ray.origin, hit.point, Color.red, 5f);
+        }
+        else
+        {
+            rangeData.UpdateRange(0f, playerCamera.transform);
+            Debug.DrawRay(ray.origin, ray.direction * 100f, Color.gray, 5f);
+        }
+    }
+    /// Utility method for static targets, for example in a TargetBank.
+    /// Computes normalized range to a specific transform without triggering events.
+
     public int GetRangeToTarget(Transform targetTransform)
     {
-        float distance = Vector3.Distance(this.transform.position, targetTransform.position);
-        int range = NormalizeRange(distance, rangePreset);
-        return range;
-    }
-    public void FindRange(float input)
-    {
-        // Cast a ray from the camera forward
-        Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit))
+        if (playerCamera == null)
+            playerCamera = Camera.main;
+        if (playerCamera == null)
         {
-            float distance = hit.distance;
-            Debug.Log("Hit object: " + hit.collider.name + " at distance: " + distance);
-            // Draw a frozen debug ray
-            DrawFrozenRay(ray.origin, ray.direction * distance, Color.red);
-            Debug.Log("returned input = " + NormalizeRange(distance, rangePreset));
-            isSrak = false;
-            currentRange = NormalizeRange(distance, rangePreset);
-            FireEndpoint.UpdateRange(distance);
-            mapContentBehavior.UpdateLaserIndicator(Mathf.RoundToInt(currentRange));
-            gui.UpdateRange(currentRange);
-        }
-        else
-        {
-            Debug.Log("No object hit");
-            DrawFrozenRay(ray.origin, ray.direction * 100f, Color.gray);
-            NormalizeRange(srak, rangePreset);
-            isSrak = true;
-            currentRange = srak;
-            FireEndpoint.UpdateRange(srak);
-            mapContentBehavior.UpdateLaserIndicator(Mathf.RoundToInt(srak));
-        }
-        UpdateLastLaserObject(hit);
-    }
-    private void UpdateLastLaserObject(RaycastHit hit)
-    {
-        if (isSrak)
-        {
-            ballisticCurve.Find("LastLaser").position = transform.position;
-            Debug.Log("srak");
-        }
-        else
-        {
-            ballisticCurve.Find("LastLaser").position = hit.point;
-        }
-    }
-    private void DrawFrozenRay(Vector3 origin, Vector3 direction, Color color)
-    {
-        // Destroy the previous ray if it exists
-        if (lastDebugRay != null)
-        {
-            Destroy(lastDebugRay);
+            Debug.LogError("RangeFind: No player camera found in GetRangeToTarget.");
+            return 0;
         }
 
-        // Create a line to represent the ray
-        GameObject lineObj = new GameObject("LaserDebugRay");
-        LineRenderer lineRenderer = lineObj.AddComponent<LineRenderer>();
-
-        lineRenderer.positionCount = 2;
-        lineRenderer.SetPosition(0, origin);
-        lineRenderer.SetPosition(1, origin + direction);
-        lineRenderer.startWidth = 0.05f;
-        lineRenderer.endWidth = 0.05f;
-        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
-        lineRenderer.startColor = color;
-        lineRenderer.endColor = color;
-
-        lastDebugRay = lineObj;
-    }
-    void Start()
-    {
-        rangePreset = SetRangePreset(minObjectTransform, maxObjectTransform);
-        currentRange = srak;
-        isSrak = true;
+        float distance = Vector3.Distance(playerCamera.transform.position, targetTransform.position);
+        return NormalizeDistance(distance);
     }
 
-    // Update is called once per frame
-    void Update()
+    /// Normalizes a distance based on the preset distances from RangeDataSO.
+    private int NormalizeDistance(float distance)
     {
-        
+        float minDist = rangeData.minPhysicalDistance;
+        float maxDist = rangeData.maxPhysicalDistance;
+
+        if (distance < minDist || distance > maxDist)
+            return 0;
+
+        float t = (distance - minDist) / (maxDist - minDist);
+        return Mathf.RoundToInt(Mathf.Lerp(
+            rangeData.outputMinValue,
+            rangeData.outputMaxValue,
+            t
+        ));
     }
 }

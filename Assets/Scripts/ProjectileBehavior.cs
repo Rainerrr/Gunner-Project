@@ -24,8 +24,8 @@ public class ProjectileBehavior : MonoBehaviour
     void Update()
     {
         sampleTime += Time.deltaTime * speed;
-        transform.position = ballisticCurve.evaluate(sampleTime);
-        transform.forward = ballisticCurve.evaluate(sampleTime + 0.001f) - transform.position;
+        transform.position = ballisticCurve.Evaluate(sampleTime);
+        transform.forward = ballisticCurve.Evaluate(sampleTime + 0.001f) - transform.position;
         if (sampleTime >= 1)
         {
             Debug.Log("Kaboom");

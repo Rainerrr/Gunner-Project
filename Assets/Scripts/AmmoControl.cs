@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class AmmoControl : MonoBehaviour
 {
-    [SerializeField] private UpdateGui gui;
+    [SerializeField] private UpdateGUI gui;
     private float activeAmmoCount = 5f;
     public Dictionary<int, string> activeAmmoDict;
     private int selectedAmmoId = 0;
