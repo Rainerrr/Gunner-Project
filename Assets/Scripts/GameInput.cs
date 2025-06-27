@@ -53,8 +53,14 @@ public class GameInput : MonoBehaviour
         inputVector = inputVector.normalized;
         return (inputVector);
     }
+    public Vector2 GetwheelMovementVectorNormalized()
+    {
+        Vector2 inputVector = playerInputActions.Player.Move.ReadValue<Vector2>();
+        inputVector = inputVector.normalized;
+        return inputVector;
+    }
 
-        private void Awake()
+    private void Awake()
     {
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Enable();

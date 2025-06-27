@@ -54,7 +54,7 @@ public class MapContentBehavior : MonoBehaviour
     }
     void Start()
     {
-        tankIcon = transform.Find("TurretIcon").GetComponent<RectTransform>();
+        tankIcon = transform.Find("MapPosition/TurretIcon").GetComponent<RectTransform>();
     }
     void Update()
     {

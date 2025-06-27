@@ -178,6 +178,7 @@ MonoBehaviour:
   horizontalDecelerationTime: 0.12
   elevation: {fileID: 603733687}
   horizontal: {fileID: 1841528590}
+  wheelControl: {fileID: 660034005}
   gameInput: {fileID: 1439359774}
   turret: {fileID: 1841528590}
   cannon: {fileID: 603733687}
@@ -1237,6 +1238,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1371587259}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &660034005 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 11481038, guid: 5c0378b47d76c394dbb09985cf5dc360,
+    type: 3}
+  m_PrefabInstance: {fileID: 1841528588}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ce03395b0d1b6c4e9fd7cee97a6f4f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &683439294 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 440106, guid: 5c0378b47d76c394dbb09985cf5dc360,

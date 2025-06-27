@@ -16,8 +16,10 @@ public class Player : MonoBehaviour
     [Tooltip("Maximum rotation speed. (Degree per Second)")] public float horizontalRotationSpeed = 20.0f;
     [Tooltip("Time to reach the maximum speed from zero. (Sec)")] public float horizontalAccelerationTime = 0.05f;
     [Tooltip("Time to stop from the maximum speed. (Sec)")] public float horizontalDecelerationTime = 0.3f;
+    [Tooltip("Is movement enabled")] private bool isMovementEnabled = false;
     [SerializeField] private Cannon elevation;
     [SerializeField] private Turret horizontal;
+    [SerializeField] private ChobiAssets.KTP.Wheel_Control_CS wheelControl;
     [SerializeField] private GameInput gameInput;
     [SerializeField] private Turret turret;
     [SerializeField] private Cannon cannon;
@@ -30,6 +32,15 @@ public class Player : MonoBehaviour
     {
         horizontal.UpdateHorizontalStats();
         elevation.UpdateElevationstats();
+    }
+    public void EnableMovementInput()
+    {
+        isMovementEnabled = true;
+    }
+
+    public void DisableMovementInput()
+    {
+        isMovementEnabled = false;
     }
     public void EnableLaserInput()
     {
@@ -96,10 +107,19 @@ public class Player : MonoBehaviour
         EnableAmmoInput();
         EnableLaserInput();
         EnableFireInput();
+        EnableMovementInput();
     }
     private void Update()
     {
         turret.HorizontalEnabled();
         cannon.ElevationAnabled();
+        if (isMovementEnabled && gameInput != null && wheelControl != null && wheelControl.isSelected)
+        {
+            wheelControl.moveAxis = gameInput.GetwheelMovementVectorNormalized();
+        }
+        else if (wheelControl != null)
+        {
+            wheelControl.moveAxis = Vector2.zero;
+        }
     }
 }
