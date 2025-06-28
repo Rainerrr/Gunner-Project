@@ -16,8 +16,7 @@ public class FireEvent : MonoBehaviour
     public void Fire(float input){
         if (!rangeData.isSrak)
         {
-            FireEndpoint fireEndpoint = ballisticCurve.GetComponentInChildren<FireEndpoint>();
-            fireEndpoint.LockTrajectory();
+            ballisticCurve.LockTrajectory();
             GameObject shell = CreateFromPrefab(shellPrefab,transform.position, shellPrefab.transform.rotation);
             shell.GetComponent<ProjectileBehavior>().SetBallisticCurve(ballisticCurve);
         }

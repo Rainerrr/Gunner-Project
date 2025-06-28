@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 15690761}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -371,7 +371,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 279693043}
-  - component: {fileID: 279693044}
   m_Layer: 0
   m_Name: Enviorment
   m_TagString: Untagged
@@ -417,24 +416,6 @@ Transform:
   - {fileID: 1000638072}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -39.858, z: 0}
---- !u!114 &279693044
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 279693042}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13e7f07da61d4a348b927e02dba26af4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseCrosshairScaleMultiplier: 1.5
-  CrosshairScaleMultiplier: 0
-  firstZoomFov: 90
-  playerController: {fileID: 15690761}
-  cinemachineVirtualCamera: {fileID: 0}
-  crosshair: {fileID: 0}
 --- !u!1001 &289064782
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -900,8 +881,6 @@ GameObject:
   - component: {fileID: 433336924}
   - component: {fileID: 433336923}
   - component: {fileID: 433336922}
-  - component: {fileID: 433336926}
-  - component: {fileID: 433336927}
   m_Layer: 15
   m_Name: FireEndpoint
   m_TagString: Untagged
@@ -995,33 +974,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1299182000}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &433336926
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 433336921}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cc71e696e4962444b0acb5253fe83c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &433336927
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 433336921}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d59dd0f9afe38a840903cac17f5b6408, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rangeData: {fileID: 0}
-  barrel: {fileID: 868294642}
-  lockTrajectoryFlag: 0
 --- !u!4 &558160377 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 413240, guid: 5c0378b47d76c394dbb09985cf5dc360,
@@ -1047,7 +999,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStats: {fileID: 15690761}
-  inputEventChannel: {fileID: 0}
+  inputEventChannel: {fileID: 11400000, guid: 821fec34619d71f48b124fab8579e6bc, type: 2}
   rotationSpeed: 10
   accelerationTime: 0.2
   decelerationTime: 0.2
@@ -1315,6 +1267,24 @@ MonoBehaviour:
   gui: {fileID: 1223977448}
   targetBank: {fileID: 1716233794}
   angleDegrees: 0
+--- !u!114 &683439302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 637430254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13e7f07da61d4a348b927e02dba26af4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseCrosshairScaleMultiplier: 3
+  CrosshairScaleMultiplier: 0
+  firstZoomFov: 90
+  playerController: {fileID: 15690761}
+  cinemachineVirtualCamera: {fileID: 868294643}
+  crosshair: {fileID: 613583380}
 --- !u!4 &695638538 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b32c12e56d3fa4c47bc99bc3e5cd3c9d,
@@ -4592,6 +4562,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 683439301}
+    - targetCorrespondingSourceObject: {fileID: 110774, guid: 5c0378b47d76c394dbb09985cf5dc360,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 683439302}
   m_SourcePrefab: {fileID: 100100000, guid: 5c0378b47d76c394dbb09985cf5dc360, type: 3}
 --- !u!1 &1841528589 stripped
 GameObject:
@@ -4612,7 +4586,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStats: {fileID: 15690761}
-  inputEventChannel: {fileID: 0}
+  inputEventChannel: {fileID: 11400000, guid: 821fec34619d71f48b124fab8579e6bc, type: 2}
   rotationSpeed: 9.5
   accelerationTime: 1
   decelerationTime: 1.5

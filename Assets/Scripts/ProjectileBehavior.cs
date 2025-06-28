@@ -29,7 +29,7 @@ public class ProjectileBehavior : MonoBehaviour
         if (sampleTime >= 1)
         {
             Debug.Log("Kaboom");
-            fireEndpoint.UnlockTrajectory();
+            ballisticCurve.UnlockTrajectory();
             Destroy(gameObject);
         }
 
