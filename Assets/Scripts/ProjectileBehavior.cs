@@ -6,13 +6,10 @@ public class ProjectileBehavior : MonoBehaviour
 {
     [SerializeField] public BallisticCurve ballisticCurve;
     [SerializeField] public float speed;
-    FireEndpoint fireEndpoint;
     private float sampleTime;
     public void SetBallisticCurve(BallisticCurve curve)
     {
         ballisticCurve = curve;
-        fireEndpoint = ballisticCurve.GetComponentInChildren<FireEndpoint>();
-
     }
     // Start is called before the first frame update
     void Start()

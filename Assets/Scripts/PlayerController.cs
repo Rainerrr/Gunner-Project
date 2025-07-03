@@ -4,6 +4,7 @@ public class Player : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private InputEventChannelSO inputEventChannel;
+    [SerializeField] private AmmoDataSO ammoDataSO;
     [SerializeField] private Turret turret;
     [SerializeField] private Cannon cannon;
     [SerializeField] private ZoomControl zoomControl;

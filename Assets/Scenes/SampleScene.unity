@@ -169,6 +169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputEventChannel: {fileID: 11400000, guid: 821fec34619d71f48b124fab8579e6bc, type: 2}
+  ammoDataSO: {fileID: 11400000, guid: 55853f50f442c7f4192f22ebdd9407f7, type: 2}
   turret: {fileID: 1841528590}
   cannon: {fileID: 603733687}
   zoomControl: {fileID: 868294644}
@@ -1232,7 +1233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e22282dedf3b7834e88ad6474281a146, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gui: {fileID: 1223977448}
+  ammoDataSO: {fileID: 11400000, guid: 55853f50f442c7f4192f22ebdd9407f7, type: 2}
 --- !u!114 &683439299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2909,6 +2910,7 @@ MonoBehaviour:
   azimuthGui: {fileID: 373334794}
   rangeGui: {fileID: 1403203075}
   ammoGui: {fileID: 1903447742}
+  ammoData: {fileID: 11400000, guid: 55853f50f442c7f4192f22ebdd9407f7, type: 2}
   rangeData: {fileID: 11400000, guid: d46c4479fe7ee4645905b4d5da8121d6, type: 2}
 --- !u!1 &1246648250
 GameObject:
