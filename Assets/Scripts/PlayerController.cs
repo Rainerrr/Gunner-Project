@@ -12,25 +12,16 @@ public class Player : MonoBehaviour
     [SerializeField] private FireEvent fireEvent;
     [SerializeField] private ChobiAssets.KTP.Wheel_Control_CS wheelControl;
 
-    [Header("Cannon movement settings")]
-    public float elevationSpeed = 10.0f;
-    public float elevateAccelerationTime = 0.2f;
-    public float elevateDecelerationTime = 0.2f;
-    public float maxElevation = 15.0f;
-    public float maxDepression = 10.0f;
-
-    [Header("Turret movement settings")]
-    public float horizontalRotationSpeed = 20.0f;
-    public float horizontalAccelerationTime = 0.05f;
-    public float horizontalDecelerationTime = 0.3f;
+    [Header("Stats")]
+    [SerializeField] public PlayerStatsSO playerStats;
 
     private bool isMovementEnabled = false;
 
     private void Start()
     {
         // init zoom control (for FOV and crosshair)
-        zoomControl.crosshair.scaleFactor = zoomControl.baseCrosshairScaleMultiplier;
-        zoomControl.cinemachineVirtualCamera.m_Lens.FieldOfView = zoomControl.firstZoomFov;
+        zoomControl.crosshair.scaleFactor = playerStats.baseCrosshairScaleMultiplier;
+        zoomControl.cinemachineVirtualCamera.m_Lens.FieldOfView = playerStats.firstZoomFov;
 
         // subscribe to input events
         EnableInputs();

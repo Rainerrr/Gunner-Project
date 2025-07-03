@@ -3,7 +3,7 @@ using UnityEngine;
 public class Turret : MonoBehaviour
 {
     [Header("Player Stats")]
-    [SerializeField] private Player playerStats;
+    [SerializeField] private PlayerStatsSO playerStats;
 
     [Header("Input Event Channel")]
     [SerializeField] private InputEventChannelSO inputEventChannel;

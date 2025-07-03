@@ -8,19 +8,13 @@ public class ZoomControl : MonoBehaviour
     private float maxZoomLevel = 2f;
     private float minZoomLevel = 0f;
     private float currentZoomLevel = 0f;
-    private float secondZoomMult = 3f;
-    private float thirdZoomMult = 6f;
-    [SerializeField] public float baseCrosshairScaleMultiplier = 3f;
-    public float CrosshairScaleMultiplier;
-    public float firstZoomFov = 90;
 
-    public Tuple<float, float> firstZoomSpeed = Tuple.Create(15f, 20f);
-    public Tuple<float, float> secondZoomSpeed = Tuple.Create(4.5f, 4.5f);
-    public Tuple<float, float> thirdZoomSpeed = Tuple.Create(1.3f, 1.3f);
+    public float CrosshairScaleMultiplier;
 
     Dictionary<float, Tuple<float, float>> ZoomLevelProperties;
-    Dictionary<float, Tuple<float, float>> ZoomLevelTurretProperties;
+    Dictionary<float, ZoomSpeedPair> ZoomLevelTurretProperties;
     [SerializeField] public Player playerController;
+    [SerializeField] private PlayerStatsSO playerStats;
     [SerializeField] public CinemachineVirtualCamera cinemachineVirtualCamera;
     [SerializeField] public Canvas crosshair;
 
@@ -54,8 +48,8 @@ public class ZoomControl : MonoBehaviour
         CrosshairScaleMultiplier = ZoomLevelProperties[currentZoomLevel].Item1;
         cinemachineVirtualCamera.m_Lens.FieldOfView = CrosshairScaleMultiplier;
         // set turret speed
-        playerController.horizontalRotationSpeed = ZoomLevelTurretProperties[currentZoomLevel].Item1;
-        playerController.elevationSpeed = ZoomLevelTurretProperties[currentZoomLevel].Item2;
+        playerStats.horizontalRotationSpeed = ZoomLevelTurretProperties[currentZoomLevel].horizontal;
+        playerStats.elevationSpeed = ZoomLevelTurretProperties[currentZoomLevel].vertical;
         playerController.UpdateMovementStats();
 
     }
@@ -66,21 +60,21 @@ public class ZoomControl : MonoBehaviour
     void Awake()
     {
         //calculating the requried fov to achieve the right multiplier based in 1 zoom level Fov
-        float secondZoomFov = GetZoomedFOV(firstZoomFov, secondZoomMult);
-        float thirdZoomFov = GetZoomedFOV(firstZoomFov, thirdZoomMult);
-        //zoom properties intialization item 1 is Camara FOV
+        float secondZoomFov = GetZoomedFOV(playerStats.firstZoomFov, playerStats.secondZoomMult);
+        float thirdZoomFov = GetZoomedFOV(playerStats.firstZoomFov, playerStats.thirdZoomMult);
+        //zoom properties intialization item 1 is Camera FOV
         //                              item 2 is crosshair scale multiplier.
         ZoomLevelProperties = new Dictionary<float, Tuple<float, float>>
         {
-            { 0f, Tuple.Create(firstZoomFov, baseCrosshairScaleMultiplier)},
-            { 1f, Tuple.Create(secondZoomFov, baseCrosshairScaleMultiplier*secondZoomMult)},
-            { 2f, Tuple.Create(thirdZoomFov, baseCrosshairScaleMultiplier*thirdZoomMult)}
+            { 0f, Tuple.Create(playerStats.firstZoomFov, playerStats.baseCrosshairScaleMultiplier)},
+            { 1f, Tuple.Create(secondZoomFov, playerStats.baseCrosshairScaleMultiplier * playerStats.secondZoomMult)},
+            { 2f, Tuple.Create(thirdZoomFov, playerStats.baseCrosshairScaleMultiplier * playerStats.thirdZoomMult)}
         };
-        ZoomLevelTurretProperties = new Dictionary<float, Tuple<float, float>>
+        ZoomLevelTurretProperties = new Dictionary<float, ZoomSpeedPair>
         {
-            { 0f, firstZoomSpeed},
-            { 1f, secondZoomSpeed},
-            { 2f, thirdZoomSpeed}
+            { 0f, playerStats.firstZoomSpeed},
+            { 1f, playerStats.secondZoomSpeed},
+            { 2f, playerStats.thirdZoomSpeed}
         };
 
     }
