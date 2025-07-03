@@ -47,6 +47,10 @@ public class BallisticCurve : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (!lockTrajectoryFlag && rangeData != null && A != null && B != null)
+        {
+            B.position = A.position + A.forward * rangeData.lastPhysicalDistance;
+        }
         // update control point dynamically to keep the curve nice
         if (A != null && B != null && Control != null)
         {
