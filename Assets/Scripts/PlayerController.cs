@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private InputEventChannelSO inputEventChannel;
@@ -35,8 +35,6 @@ public class Player : MonoBehaviour
 
     public void EnableInputs()
     {
-        inputEventChannel.OnFire += fireEvent.Fire;
-        inputEventChannel.OnRangeFound += rangeFind.OnRangeRequest;
         inputEventChannel.OnZoom += zoomControl.HandleZoomInput;
         inputEventChannel.OnAmmoChange += ammoControl.HandleAmmoInput;
         inputEventChannel.OnTurretRotate += HandleTurretRotate;
@@ -47,8 +45,6 @@ public class Player : MonoBehaviour
 
     public void DisableInputs()
     {
-        inputEventChannel.OnFire -= fireEvent.Fire;
-        inputEventChannel.OnRangeFound -= rangeFind.OnRangeRequest;
         inputEventChannel.OnZoom -= zoomControl.HandleZoomInput;
         inputEventChannel.OnAmmoChange -= ammoControl.HandleAmmoInput;
         inputEventChannel.OnTurretRotate -= HandleTurretRotate;

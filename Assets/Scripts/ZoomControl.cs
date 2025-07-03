@@ -13,7 +13,7 @@ public class ZoomControl : MonoBehaviour
 
     Dictionary<float, Tuple<float, float>> ZoomLevelProperties;
     Dictionary<float, ZoomSpeedPair> ZoomLevelTurretProperties;
-    [SerializeField] public Player playerController;
+    [SerializeField] public PlayerController playerController;
     [SerializeField] private PlayerStatsSO playerStats;
     [SerializeField] public CinemachineVirtualCamera cinemachineVirtualCamera;
     [SerializeField] public Canvas crosshair;

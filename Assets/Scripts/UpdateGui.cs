@@ -8,6 +8,7 @@ public class UpdateGUI : MonoBehaviour
     [SerializeField] private TMP_Text ammoGui;
     [SerializeField] private AmmoDataSO ammoData;
     [SerializeField] private RangeDataSO rangeData;
+    [SerializeField] private AzimuthDataSO azimuthData;
     void OnEnable()
     {
         if (rangeData != null)
@@ -16,6 +17,8 @@ public class UpdateGUI : MonoBehaviour
         {
             ammoData.OnAmmoChanged += UpdateAmmoFromSO;
         }
+        if (azimuthData != null)
+            azimuthData.OnAzimuthUpdated += UpdateAzimuthFromSO;
     }
 
     void OnDisable()
@@ -26,6 +29,8 @@ public class UpdateGUI : MonoBehaviour
         {
             ammoData.OnAmmoChanged -= UpdateAmmoFromSO;
         }
+        if (azimuthData != null)
+            azimuthData.OnAzimuthUpdated -= UpdateAzimuthFromSO;
     }
 
     private void UpdateRangeFromSO(int range, bool isSrak, float lastDistance, Vector3 lastLaser)
@@ -35,6 +40,10 @@ public class UpdateGUI : MonoBehaviour
     private void UpdateAmmoFromSO(string ammo)
     {
         UpdateAmmo(ammo);
+    }
+    private void UpdateAzimuthFromSO(float azimuth)
+    {
+        UpdateAzimuth(Mathf.RoundToInt(azimuth));
     }
 
     // Update the range text in the UI (called automatically via event)
