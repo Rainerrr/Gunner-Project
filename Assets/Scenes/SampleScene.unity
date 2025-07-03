@@ -176,14 +176,7 @@ MonoBehaviour:
   ammoControl: {fileID: 683439297}
   fireEvent: {fileID: 683439299}
   wheelControl: {fileID: 660034005}
-  elevationSpeed: 15
-  elevateAccelerationTime: 0.22
-  elevateDecelerationTime: 0.1
-  maxElevation: 30
-  maxDepression: 17
-  horizontalRotationSpeed: 20
-  horizontalAccelerationTime: 0.31
-  horizontalDecelerationTime: 0.12
+  playerStats: {fileID: 11400000, guid: faeeaef4d6794b3e819f8125198d5c13, type: 2}
 --- !u!4 &40565401 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1301145089138318173, guid: 9005846b476cf224d96a32b17caf94da,
@@ -998,7 +991,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db1e02b5a9692f346b6d0cde83d7f59c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStats: {fileID: 15690761}
+  playerStats: {fileID: 11400000, guid: faeeaef4d6794b3e819f8125198d5c13, type: 2}
   inputEventChannel: {fileID: 11400000, guid: 821fec34619d71f48b124fab8579e6bc, type: 2}
   rotationSpeed: 10
   accelerationTime: 0.2
@@ -1279,10 +1272,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13e7f07da61d4a348b927e02dba26af4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseCrosshairScaleMultiplier: 3
   CrosshairScaleMultiplier: 0
-  firstZoomFov: 90
   playerController: {fileID: 15690761}
+  playerStats: {fileID: 11400000, guid: faeeaef4d6794b3e819f8125198d5c13, type: 2}
   cinemachineVirtualCamera: {fileID: 868294643}
   crosshair: {fileID: 613583380}
 --- !u!4 &695638538 stripped
@@ -1858,10 +1850,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13e7f07da61d4a348b927e02dba26af4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseCrosshairScaleMultiplier: 0.7
   CrosshairScaleMultiplier: 0.9
-  firstZoomFov: 38
   playerController: {fileID: 15690761}
+  playerStats: {fileID: 11400000, guid: faeeaef4d6794b3e819f8125198d5c13, type: 2}
   cinemachineVirtualCamera: {fileID: 868294643}
   crosshair: {fileID: 613583380}
 --- !u!114 &868294645
@@ -4585,7 +4576,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6bff07a017211e4c95157de9b22c797, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStats: {fileID: 15690761}
+  playerStats: {fileID: 11400000, guid: faeeaef4d6794b3e819f8125198d5c13, type: 2}
   inputEventChannel: {fileID: 11400000, guid: 821fec34619d71f48b124fab8579e6bc, type: 2}
   rotationSpeed: 9.5
   accelerationTime: 1
