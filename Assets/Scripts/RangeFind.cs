@@ -7,6 +7,18 @@ public class RangeFind : MonoBehaviour
     [SerializeField] private RangeDataSO rangeData;
     [SerializeField] private Camera playerCamera;
 
+    private void OnEnable()
+    {
+        if (inputEventChannel != null)
+            inputEventChannel.OnRangeFound += OnRangeRequest;
+    }
+
+    private void OnDisable()
+    {
+        if (inputEventChannel != null)
+            inputEventChannel.OnRangeFound -= OnRangeRequest;
+    }
+
     private void Start()
     {
         // Auto-find camera if not set

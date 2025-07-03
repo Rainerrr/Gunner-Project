@@ -34,7 +34,6 @@ public class AmmoDataSO : ScriptableObject
     /// Returns the name of the currently selected ammo.
     public string GetSelectedAmmo()
     {
-        Debug.Log(selectedAmmoIndex);
         return ammoTypes.Count > 0
             ? ammoTypes[selectedAmmoIndex]
             : string.Empty;

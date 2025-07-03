@@ -8,7 +8,7 @@ public class MinimapBehavior : MonoBehaviour
     [Tooltip("The RectTransform of your full Minimap GameObject (mask + map + icons)")]
     [SerializeField] private RectTransform minimapRect;
     [Tooltip("Player controller script to enable/disable input when the minimap is toggled")]
-    [SerializeField] private Player playerController;
+    [SerializeField] private PlayerController playerController;
 
     [Header("Zoom Settings")]
     [Tooltip("How many times larger the minimap becomes when expanded")]

@@ -6,7 +6,7 @@ public class AzimuthFind : MonoBehaviour
 
     public Transform cameraTransform; // The player's camera transform
     public Vector3 northDirection = Vector3.forward; // The reference north direction, can be set to any world direction
-    [SerializeField] private UpdateGUI gui;    // UI Text to display azimuth in mils
+    [SerializeField] private AzimuthDataSO azimuthData;    // ScriptableObject to broadcast azimuth
     [SerializeField] public TargetBank targetBank;    
     public float angleDegrees;
 
@@ -64,6 +64,10 @@ public class AzimuthFind : MonoBehaviour
     }
     void Update()
     {
-        gui.UpdateAzimuth(Mathf.RoundToInt(CalculateCamaraAzimuth()));
+        if (azimuthData != null)
+        {
+            float az = CalculateCamaraAzimuth();
+            azimuthData.UpdateAzimuth(az);
+        }
     }
 }
