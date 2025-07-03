@@ -1240,10 +1240,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rangeData: {fileID: 11400000, guid: d46c4479fe7ee4645905b4d5da8121d6, type: 2}
+  inputEventChannel: {fileID: 11400000, guid: 821fec34619d71f48b124fab8579e6bc, type: 2}
   shellPrefab: {fileID: 3026866025891008728, guid: a859daa56100c3548a1cc27e736a6c15,
     type: 3}
   ballisticCurve: {fileID: 1299182001}
-  rangeFind: {fileID: 683439295}
 --- !u!114 &683439301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1258,7 +1258,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 868294642}
   northDirection: {x: 0, y: 0, z: -1}
-  gui: {fileID: 1223977448}
+  azimuthData: {fileID: 11400000, guid: 1122de335b05cf7488ad7e54bf2e69c6, type: 2}
   targetBank: {fileID: 1716233794}
   angleDegrees: 0
 --- !u!114 &683439302
@@ -2903,6 +2903,7 @@ MonoBehaviour:
   ammoGui: {fileID: 1903447742}
   ammoData: {fileID: 11400000, guid: 55853f50f442c7f4192f22ebdd9407f7, type: 2}
   rangeData: {fileID: 11400000, guid: d46c4479fe7ee4645905b4d5da8121d6, type: 2}
+  azimuthData: {fileID: 11400000, guid: 1122de335b05cf7488ad7e54bf2e69c6, type: 2}
 --- !u!1 &1246648250
 GameObject:
   m_ObjectHideFlags: 0
@@ -5198,7 +5199,6 @@ GameObject:
   - component: {fileID: 2039807705}
   - component: {fileID: 2039807704}
   - component: {fileID: 2039807703}
-  - component: {fileID: 2039807702}
   m_Layer: 15
   m_Name: LastLaser
   m_TagString: Untagged
@@ -5221,18 +5221,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1299182000}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2039807702
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2039807699}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cc71e696e4962444b0acb5253fe83c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!135 &2039807703
 SphereCollider:
   m_ObjectHideFlags: 0

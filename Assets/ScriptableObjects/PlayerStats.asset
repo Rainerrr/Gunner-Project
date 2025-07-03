@@ -12,21 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 071afeca15fd4d61820df055ccbe9104, type: 3}
   m_Name: PlayerStats
   m_EditorClassIdentifier: 
-  elevationSpeed: 20
+  elevationSpeed: 25
   elevateAccelerationTime: 0.2
-  elevateDecelerationTime: 0.2
+  elevateDecelerationTime: 0.15
   maxElevation: 15
   maxDepression: 10
-  horizontalRotationSpeed: 15
+  horizontalRotationSpeed: 25
   horizontalAccelerationTime: 0.05
-  horizontalDecelerationTime: 0.3
+  horizontalDecelerationTime: 0.2
   baseCrosshairScaleMultiplier: 0.83
   firstZoomFov: 90
   secondZoomMult: 3
   thirdZoomMult: 6
   firstZoomSpeed:
-    horizontal: 15
-    vertical: 20
+    horizontal: 25
+    vertical: 25
   secondZoomSpeed:
     horizontal: 4.5
     vertical: 4.5
