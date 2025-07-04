@@ -30,7 +30,7 @@ public class ObjectiveManager : MonoBehaviour
     public readonly List<ObjectiveStage> stages = new List<ObjectiveStage>();
     public int currentStageIndex = -1;
 
-    private void Awake()
+    private void Start()
     {
         BuildStageList();
         StartNextStage();
