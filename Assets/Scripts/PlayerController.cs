@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Turret turret;
     [SerializeField] private Cannon cannon;
     [SerializeField] private ZoomControl zoomControl;
+    [SerializeField] private ZoomDataSO zoomData;
     [SerializeField] private RangeFind rangeFind;
     [SerializeField] private AmmoControl ammoControl;
     [SerializeField] private FireEvent fireEvent;
@@ -18,15 +19,21 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        // init zoom control (for FOV and crosshair)
         zoomControl.Init();
-        // subscribe to input events
+        if (zoomData != null)
+        {
+            zoomData.OnZoomChanged += HandleZoomChanged;
+        }
         EnableInputs();
     }
 
     private void OnDestroy()
     {
         DisableInputs();
+        if (zoomData != null)
+        {
+            zoomData.OnZoomChanged -= HandleZoomChanged;
+        }
     }
 
     public void EnableInputs()
@@ -47,6 +54,13 @@ public class PlayerController : MonoBehaviour
         inputEventChannel.OnGunElevate -= HandleGunElevate;
 
         isMovementEnabled = false;
+    }
+
+    private void HandleZoomChanged(float fov, float crosshair, ZoomSpeedPair speeds)
+    {
+        playerStats.horizontalRotationSpeed = speeds.horizontal;
+        playerStats.elevationSpeed = speeds.vertical;
+        UpdateMovementStats();
     }
 
     /// Called by InputEventChannel when X-axis input is received.

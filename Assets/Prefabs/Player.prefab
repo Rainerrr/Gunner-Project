@@ -975,6 +975,20 @@ MonoBehaviour:
   m_FocusTarget: {fileID: 0}
   m_FocusOffset: 0
   m_Profile: {fileID: 11400000, guid: 99d334a132d43f041a3c473e147552c0, type: 2}
+--- !u!114 &6020729384629913564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3558425542375379146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dceb149f2c4441ca93ff420f1cab7b26, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  zoomData: {fileID: 11400000, guid: 96dd1cc04e244b78b10daacaad3f0866, type: 2}
+  virtualCamera: {fileID: 5133253749813330811}
 --- !u!1 &3642334137639022402
 GameObject:
   m_ObjectHideFlags: 0
@@ -1511,7 +1525,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
@@ -1523,6 +1537,20 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 0
+--- !u!114 &352996433710349462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5563475074804012763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d5001e058aa44a184e337ac2704b1d9, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  zoomData: {fileID: 11400000, guid: 96dd1cc04e244b78b10daacaad3f0866, type: 2}
+  crosshairCanvas: {fileID: 8843690208723189985}
 --- !u!1 &6134611128853099932
 GameObject:
   m_ObjectHideFlags: 0
@@ -1789,6 +1817,7 @@ MonoBehaviour:
   turret: {fileID: 602973947035364966}
   cannon: {fileID: 942585543237325284}
   zoomControl: {fileID: 6012960907267717893}
+  zoomData: {fileID: 11400000, guid: 96dd1cc04e244b78b10daacaad3f0866, type: 2}
   rangeFind: {fileID: 3001821554265749200}
   ammoControl: {fileID: 4933521272506762197}
   fireEvent: {fileID: 3907711152556618487}
@@ -2606,12 +2635,8 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 13e7f07da61d4a348b927e02dba26af4, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
-  CrosshairScaleMultiplier: 0
-  playerController: {fileID: 5274623274121444892}
-  playerStats: {fileID: 11400000, guid: faeeaef4d6794b3e819f8125198d5c13, type: 2}
-  cinemachineVirtualCamera: {fileID: 5133253749813330811}
-  crosshair: {fileID: 8843690208723189985}
+  m_EditorClassIdentifier:
+  zoomData: {fileID: 11400000, guid: 96dd1cc04e244b78b10daacaad3f0866, type: 2}
 --- !u!1 &6439459721483105339 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 105442, guid: 5c0378b47d76c394dbb09985cf5dc360,
