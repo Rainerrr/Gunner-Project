@@ -5,7 +5,7 @@ using UnityEngine;
 /// Objective that is completed once the player "hits" four target corners
 /// with the laser object. Each corner must have a collider component.
 /// </summary>
-public class CornerCheck : MonoBehaviour, IObjective
+public class CornerCheck : Objective
 {
     [Header("Corners to check")]
     public Transform[] cornerTransforms = new Transform[4];
@@ -20,7 +20,6 @@ public class CornerCheck : MonoBehaviour, IObjective
     private Collider laserCollider;
     private readonly Collider[] cornerColliders = new Collider[4];
 
-    public event Action OnCompleted;
 
     private void Awake()
     {
@@ -43,7 +42,7 @@ public class CornerCheck : MonoBehaviour, IObjective
         enabled = false;
     }
 
-    public void Activate()
+    public override void Activate()
     {
         // Called by the ObjectiveManager when this objective becomes active
         enabled = true;
@@ -78,7 +77,8 @@ public class CornerCheck : MonoBehaviour, IObjective
     private void CompleteObjective()
     {
         enabled = false;
-        OnCompleted?.Invoke();
+        // Notify the manager via the base class
+        Complete();
         Destroy(gameObject);
     }
 }

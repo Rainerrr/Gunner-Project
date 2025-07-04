@@ -18,8 +18,8 @@ public class ObjectiveManager : MonoBehaviour
     [Serializable]
     public class ObjectiveStage
     {
-        // Component implementing IObjective that controls the objective logic
-        public MonoBehaviour objectiveBehaviour;
+        // Objective behaviour controlling the stage logic
+        public Objective objective;
 
         // Event invoked when the stage finishes. The integer parameter
         // represents the stage number that was completed.
@@ -46,7 +46,7 @@ public class ObjectiveManager : MonoBehaviour
 
     /// <summary>
     /// Iterates over all direct children and creates an ordered list of stages.
-    /// Every child is expected to contain a component that implements IObjective.
+    /// Every child is expected to contain an <see cref="Objective"/> component.
     /// </summary>
     private void BuildStageList()
     {
@@ -54,17 +54,17 @@ public class ObjectiveManager : MonoBehaviour
         for (int i = 0; i < transform.childCount; i++)
         {
             Transform child = transform.GetChild(i);
-            IObjective objective = child.GetComponent<IObjective>();
+            Objective objective = child.GetComponent<Objective>();
             if (objective == null)
             {
-                Debug.LogWarning($"Child {child.name} does not contain an IObjective component");
+                Debug.LogWarning($"Child {child.name} does not contain an Objective component");
                 continue;
             }
 
             // deactivate until the manager activates it
             child.gameObject.SetActive(false);
 
-            ObjectiveStage stage = new ObjectiveStage { objectiveBehaviour = objective as MonoBehaviour };
+            ObjectiveStage stage = new ObjectiveStage { objective = objective };
             // Subscribe a debug listener so we know when each stage completes.
             stage.onStageCompleted.AddListener(LogStageCompleted);
             stages.Add(stage);
@@ -100,11 +100,9 @@ public class ObjectiveManager : MonoBehaviour
             return;
 
         ObjectiveStage stage = stages[currentStageIndex];
-        IObjective objective = stage.objectiveBehaviour as IObjective;
-        if (objective == null)
-            return;
+        Objective objective = stage.objective;
 
-        stage.objectiveBehaviour.gameObject.SetActive(true);
+        stage.objective.gameObject.SetActive(true);
         objective.OnCompleted += HandleCurrentStageCompleted;
         objective.Activate();
     }
@@ -116,14 +114,14 @@ public class ObjectiveManager : MonoBehaviour
     private void HandleCurrentStageCompleted()
     {
         ObjectiveStage stage = stages[currentStageIndex];
-        IObjective objective = stage.objectiveBehaviour as IObjective;
+        Objective objective = stage.objective;
         objective.OnCompleted -= HandleCurrentStageCompleted;
 
         // Notify listeners that this stage finished. We pass the stage number
         // (1-based) so external systems know which objective was just
         // completed.
         stage.onStageCompleted.Invoke(currentStageIndex + 1);
-        stage.objectiveBehaviour.gameObject.SetActive(false);
+        objective.gameObject.SetActive(false);
 
         StartNextStage();
     }
