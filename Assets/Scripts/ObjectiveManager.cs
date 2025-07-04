@@ -72,6 +72,25 @@ public class ObjectiveManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Allows external scripts to retrieve a stage by index so they can
+    /// subscribe to its completion event.
+    /// </summary>
+    /// <param name="index">Zero-based stage index.</param>
+    /// <param name="stage">The stage instance if found.</param>
+    /// <returns>True if the stage exists.</returns>
+    public bool TryGetStage(int index, out ObjectiveStage stage)
+    {
+        if (index >= 0 && index < stages.Count)
+        {
+            stage = stages[index];
+            return true;
+        }
+
+        stage = null;
+        return false;
+    }
+
+    /// <summary>
     /// Activates the next objective stage if available.
     /// </summary>
     private void StartNextStage()
