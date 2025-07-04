@@ -21,9 +21,9 @@ public class ObjectiveManager : MonoBehaviour
         // Component implementing IObjective that controls the objective logic
         public MonoBehaviour objectiveBehaviour;
 
-        // Event invoked when the stage finishes. The passed string describes
-        // which stage was completed (e.g. "completed objective 1").
-        public UnityEvent<string> onStageCompleted = new UnityEvent<string>();
+        // Event invoked when the stage finishes. The integer parameter
+        // represents the stage number that was completed.
+        public UnityEvent<int> onStageCompleted = new UnityEvent<int>();
     }
 
     private readonly List<ObjectiveStage> stages = new List<ObjectiveStage>();
@@ -33,6 +33,15 @@ public class ObjectiveManager : MonoBehaviour
     {
         BuildStageList();
         StartNextStage();
+    }
+
+    /// <summary>
+    /// Debug helper that logs whenever a stage is completed.
+    /// </summary>
+    /// <param name="stageNumber">1-based index of the completed stage.</param>
+    private void LogStageCompleted(int stageNumber)
+    {
+        Debug.Log($"stage number {stageNumber} completed");
     }
 
     /// <summary>
@@ -56,6 +65,8 @@ public class ObjectiveManager : MonoBehaviour
             child.gameObject.SetActive(false);
 
             ObjectiveStage stage = new ObjectiveStage { objectiveBehaviour = objective as MonoBehaviour };
+            // Subscribe a debug listener so we know when each stage completes.
+            stage.onStageCompleted.AddListener(LogStageCompleted);
             stages.Add(stage);
         }
     }
@@ -89,7 +100,10 @@ public class ObjectiveManager : MonoBehaviour
         IObjective objective = stage.objectiveBehaviour as IObjective;
         objective.OnCompleted -= HandleCurrentStageCompleted;
 
-        stage.onStageCompleted.Invoke($"completed objective {currentStageIndex + 1}");
+        // Notify listeners that this stage finished. We pass the stage number
+        // (1-based) so external systems know which objective was just
+        // completed.
+        stage.onStageCompleted.Invoke(currentStageIndex + 1);
         stage.objectiveBehaviour.gameObject.SetActive(false);
 
         StartNextStage();
