@@ -10,6 +10,7 @@ using UnityEngine.Events;
 /// </summary>
 public class ObjectiveManager : MonoBehaviour
 {
+    public static ObjectiveManager Instance { get; private set; }
     /// <summary>
     /// Wrapper class for a single objective stage.
     /// Holds a reference to the objective behaviour and an event that fires
@@ -26,8 +27,8 @@ public class ObjectiveManager : MonoBehaviour
         public UnityEvent<int> onStageCompleted = new UnityEvent<int>();
     }
 
-    private readonly List<ObjectiveStage> stages = new List<ObjectiveStage>();
-    private int currentStageIndex = -1;
+    public readonly List<ObjectiveStage> stages = new List<ObjectiveStage>();
+    public int currentStageIndex = -1;
 
     private void Awake()
     {

@@ -40,6 +40,9 @@ public class TargetBank : MonoBehaviour
 
         // 4. Add to the list
         targetList.Add(t);
+        if (ObjectiveManager.Instance.stages[ObjectiveManager.Instance.currentStageIndex].objective is PressButtonObjective) {
+            ObjectiveManager.Instance.stages[ObjectiveManager.Instance.currentStageIndex].objective.Activate();
+        }
         return t;
     }
     void Start()

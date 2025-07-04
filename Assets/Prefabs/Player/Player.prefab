@@ -289,9 +289,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ee385775ea05ae4ca977820b644d40a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectivesPanel: {fileID: 3451883225151322276}
-  objectiveGui: {fileID: 8614504766119155035, guid: c87fd0a91ebe9624db60c83089ca88c8,
-    type: 3}
 --- !u!1 &1030612872484410154
 GameObject:
   m_ObjectHideFlags: 0
@@ -877,6 +874,7 @@ GameObject:
   - component: {fileID: 5133253749813330811}
   - component: {fileID: 7667125211500745965}
   - component: {fileID: 845665681158888356}
+  - component: {fileID: 6020729384629913564}
   m_Layer: 0
   m_Name: GunCam
   m_TagString: Untagged
@@ -985,8 +983,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dceb149f2c4441ca93ff420f1cab7b26, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   zoomData: {fileID: 11400000, guid: 96dd1cc04e244b78b10daacaad3f0866, type: 2}
   virtualCamera: {fileID: 5133253749813330811}
 --- !u!1 &3642334137639022402
@@ -1464,6 +1462,7 @@ GameObject:
   - component: {fileID: 4992983931865331780}
   - component: {fileID: 8843690208723189985}
   - component: {fileID: 212354223751001544}
+  - component: {fileID: 352996433710349462}
   m_Layer: 0
   m_Name: Crosshair
   m_TagString: Untagged
@@ -1525,7 +1524,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
-  m_EditorClassIdentifier:
+  m_EditorClassIdentifier: 
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
@@ -1547,8 +1546,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d5001e058aa44a184e337ac2704b1d9, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   zoomData: {fileID: 11400000, guid: 96dd1cc04e244b78b10daacaad3f0866, type: 2}
   crosshairCanvas: {fileID: 8843690208723189985}
 --- !u!1 &6134611128853099932
@@ -2314,9 +2313,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1006369520085149251}
   - {fileID: 4992983931865331780}
   - {fileID: 2598731055851203199}
-  - {fileID: 1006369520085149251}
   m_Father: {fileID: 4804183222198184873}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9013370217318731840
@@ -2635,7 +2634,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 13e7f07da61d4a348b927e02dba26af4, type: 3}
   m_Name: 
-  m_EditorClassIdentifier:
+  m_EditorClassIdentifier: 
   zoomData: {fileID: 11400000, guid: 96dd1cc04e244b78b10daacaad3f0866, type: 2}
 --- !u!1 &6439459721483105339 stripped
 GameObject:

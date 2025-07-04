@@ -33,7 +33,7 @@ public class ObjectiveUiManager : MonoBehaviour
 
         if (objectiveManager.TryGetStage(currentStageIndex, out var stage))
         {
-            currentUi = Instantiate(objectiveUiPrefab, objectiveManager.transform);
+            currentUi = Instantiate(objectiveUiPrefab, this.transform);
             currentUi.Init(stage.objective);
             stage.onStageCompleted.AddListener(OnStageCompleted);
         }
