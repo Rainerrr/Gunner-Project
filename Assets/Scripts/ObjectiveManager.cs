@@ -1,62 +1,128 @@
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
+/// <summary>
+/// Manages a sequence of objectives that are supplied as child game objects.
+/// On start the manager gathers the objectives in hierarchy order, subscribes
+/// to their completion events and activates them one by one.
+/// </summary>
 public class ObjectiveManager : MonoBehaviour
 {
-    [Header("UI Setup")]
-    public Transform objectivesPanel;      // Left-side panel (VerticalLayoutGroup)
-    public GameObject objectiveGui;  // Your ObjectiveUIItem prefab
-
-    // internal state
-    private List<Objective> objectives;
-    private int currentIndex = 0;
-    private ObjectiveGui currentObjectiveGui;
-
-    void Start()
+    /// <summary>
+    /// Wrapper class for a single objective stage.
+    /// Holds a reference to the objective behaviour and an event that fires
+    /// when this stage is completed.
+    /// </summary>
+    [Serializable]
+    public class ObjectiveStage
     {
-        // 1. grab and sort by sibling index (their place in the Hierarchy under the same parent)
-        objectives = FindObjectsOfType<Objective>()
-                       .OrderBy(o => o.transform.GetSiblingIndex())
-                       .ToList();
+        // Objective behaviour controlling the stage logic
+        public Objective objective;
 
-        // 2. hide them all initially
-        objectives.ForEach(o => o.gameObject.SetActive(false));
-
-        // 3. start the first one
-        ActivateObjective(0);
+        // Event invoked when the stage finishes. The integer parameter
+        // represents the stage number that was completed.
+        public UnityEvent<int> onStageCompleted = new UnityEvent<int>();
     }
 
-    void ActivateObjective(int idx)
+    private readonly List<ObjectiveStage> stages = new List<ObjectiveStage>();
+    private int currentStageIndex = -1;
+
+    private void Awake()
     {
-        if (idx < 0 || idx >= objectives.Count) return;
-
-        currentIndex = idx;
-        var obj = objectives[idx];
-
-        // enable the GameObject so its logic & Complete() can fire
-        obj.gameObject.SetActive(true);
-
-        // instantiate & init the UI row
-        var uiGO = Instantiate(objectiveGui, objectivesPanel);
-        currentObjectiveGui = uiGO.GetComponent<ObjectiveGui>();
-        currentObjectiveGui.Init(obj);
-
-        // subscribe to its completion
-        obj.OnCompleted += OnCurrentCompleted;
+        BuildStageList();
+        StartNextStage();
     }
 
-    void OnCurrentCompleted(Objective obj)
+    /// <summary>
+    /// Debug helper that logs whenever a stage is completed.
+    /// </summary>
+    /// <param name="stageNumber">1-based index of the completed stage.</param>
+    private void LogStageCompleted(int stageNumber)
     {
-        // cleanup this objective's event & UI
-        obj.OnCompleted -= OnCurrentCompleted;
-        //currentObjectiveGui.Check();       // you can add a helper that just turns on the checkmark
-        currentObjectiveGui = null;
+        Debug.Log($"stage number {stageNumber} completed");
+    }
 
-        // destroy or disable the old objective prefab if you like
-        // Destroy(obj.gameObject);
+    /// <summary>
+    /// Iterates over all direct children and creates an ordered list of stages.
+    /// Every child is expected to contain an <see cref="Objective"/> component.
+    /// </summary>
+    private void BuildStageList()
+    {
+        stages.Clear();
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Transform child = transform.GetChild(i);
+            Objective objective = child.GetComponent<Objective>();
+            if (objective == null)
+            {
+                Debug.LogWarning($"Child {child.name} does not contain an Objective component");
+                continue;
+            }
 
-        // move to the next one
-        ActivateObjective(currentIndex + 1);
+            // deactivate until the manager activates it
+            child.gameObject.SetActive(false);
+
+            ObjectiveStage stage = new ObjectiveStage { objective = objective };
+            // Subscribe a debug listener so we know when each stage completes.
+            stage.onStageCompleted.AddListener(LogStageCompleted);
+            stages.Add(stage);
+        }
+    }
+
+    /// <summary>
+    /// Allows external scripts to retrieve a stage by index so they can
+    /// subscribe to its completion event.
+    /// </summary>
+    /// <param name="index">Zero-based stage index.</param>
+    /// <param name="stage">The stage instance if found.</param>
+    /// <returns>True if the stage exists.</returns>
+    public bool TryGetStage(int index, out ObjectiveStage stage)
+    {
+        if (index >= 0 && index < stages.Count)
+        {
+            stage = stages[index];
+            return true;
+        }
+
+        stage = null;
+        return false;
+    }
+
+    /// <summary>
+    /// Activates the next objective stage if available.
+    /// </summary>
+    private void StartNextStage()
+    {
+        currentStageIndex++;
+        if (currentStageIndex >= stages.Count)
+            return;
+
+        ObjectiveStage stage = stages[currentStageIndex];
+        Objective objective = stage.objective;
+
+        stage.objective.gameObject.SetActive(true);
+        objective.OnCompleted += HandleCurrentStageCompleted;
+        objective.Activate();
+    }
+
+    /// <summary>
+    /// Called when the active objective reports completion.
+    /// Cleans up and moves on to the next objective.
+    /// </summary>
+    private void HandleCurrentStageCompleted()
+    {
+        ObjectiveStage stage = stages[currentStageIndex];
+        Objective objective = stage.objective;
+        objective.OnCompleted -= HandleCurrentStageCompleted;
+
+        // Notify listeners that this stage finished. We pass the stage number
+        // (1-based) so external systems know which objective was just
+        // completed.
+        stage.onStageCompleted.Invoke(currentStageIndex + 1);
+        objective.gameObject.SetActive(false);
+
+        StartNextStage();
     }
 }

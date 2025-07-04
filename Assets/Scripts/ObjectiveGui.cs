@@ -13,6 +13,6 @@ public class ObjectiveGui : MonoBehaviour
         descriptionText.text = obj.objectiveTitle;
         checkIcon.enabled = obj.Completed;
         // subscribe to updates
-        obj.OnCompleted += _ => checkIcon.enabled = true;
+        obj.OnCompleted += () => checkIcon.enabled = true;
     }
 }
