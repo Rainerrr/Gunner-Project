@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ObjectiveGui : MonoBehaviour
+public class ObjectiveUi : MonoBehaviour
 {
     [SerializeField] TMP_Text descriptionText;
     [SerializeField] Image checkIcon;

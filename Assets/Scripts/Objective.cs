@@ -13,27 +13,19 @@ public abstract class Objective : MonoBehaviour
 
     [TextArea]
     public string objectiveDescription;
-
-    /// <summary>
+    
     /// True once <see cref="Complete"/> has been called.
-    /// </summary>
     public bool Completed { get; private set; }
 
-    /// <summary>
     /// Fired once when this objective has been satisfied.
-    /// </summary>
     public event Action OnCompleted;
 
-    /// <summary>
     /// Called by <see cref="ObjectiveManager"/> when this objective becomes active.
     /// Override in derived classes to enable behaviour.
-    /// </summary>
     public virtual void Activate() { }
 
-    /// <summary>
     /// Marks the objective complete and notifies listeners.
     /// Derived classes should call this when their conditions are met.
-    /// </summary>
     protected void Complete()
     {
         if (Completed) return;
@@ -43,8 +35,6 @@ public abstract class Objective : MonoBehaviour
         Debug.Log($"Objective Complete: {objectiveTitle}");
     }
 
-    /// <summary>
     /// Optional hook for subclasses when the objective finishes.
-    /// </summary>
     protected virtual void OnObjectiveCompleted() { }
 }
