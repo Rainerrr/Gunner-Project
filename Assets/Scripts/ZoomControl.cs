@@ -18,7 +18,7 @@ public class ZoomControl : MonoBehaviour
     [SerializeField] public CinemachineVirtualCamera cinemachineVirtualCamera;
     [SerializeField] public Canvas crosshair;
 
-    public static float GetZoomedFOV(float baseFOV, float zoomMultiplier)
+    private static float GetZoomedFOV(float baseFOV, float zoomMultiplier)
     {
         // Prevent division by zero or negative values
         if (zoomMultiplier <= 0f)
@@ -43,6 +43,15 @@ public class ZoomControl : MonoBehaviour
             currentZoomLevel = Mathf.Max(currentZoomLevel - 1f, minZoomLevel);
         }
         Debug.Log("Zoom level x: " + currentZoomLevel);
+        AdjustZoomParameters();
+
+    }
+    public float GetZoomLevel()
+    {
+        return currentZoomLevel;
+    }
+    private void AdjustZoomParameters()
+    {
         // set FOV and crosshair size
         crosshair.scaleFactor = ZoomLevelProperties[currentZoomLevel].Item2;
         CrosshairScaleMultiplier = ZoomLevelProperties[currentZoomLevel].Item1;
@@ -53,11 +62,7 @@ public class ZoomControl : MonoBehaviour
         playerController.UpdateMovementStats();
 
     }
-    public float GetZoomLevel()
-    {
-        return currentZoomLevel;
-    }
-    void Awake()
+    public void Init()
     {
         //calculating the requried fov to achieve the right multiplier based in 1 zoom level Fov
         float secondZoomFov = GetZoomedFOV(playerStats.firstZoomFov, playerStats.secondZoomMult);
@@ -76,13 +81,9 @@ public class ZoomControl : MonoBehaviour
             { 1f, playerStats.secondZoomSpeed},
             { 2f, playerStats.thirdZoomSpeed}
         };
-
-    }
-    void Start()
-    {
-
-    }
-    void Update()
-    {
+        crosshair.scaleFactor = playerStats.baseCrosshairScaleMultiplier;
+        cinemachineVirtualCamera.m_Lens.FieldOfView = playerStats.firstZoomFov;
+        currentZoomLevel = 0;
+        AdjustZoomParameters();
     }
 }

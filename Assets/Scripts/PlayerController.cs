@@ -11,8 +11,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private RangeFind rangeFind;
     [SerializeField] private AmmoControl ammoControl;
     [SerializeField] private FireEvent fireEvent;
-    [SerializeField] private ChobiAssets.KTP.Wheel_Control_CS wheelControl;
-
     [Header("Stats")]
     [SerializeField] public PlayerStatsSO playerStats;
 
@@ -21,9 +19,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         // init zoom control (for FOV and crosshair)
-        zoomControl.crosshair.scaleFactor = playerStats.baseCrosshairScaleMultiplier;
-        zoomControl.cinemachineVirtualCamera.m_Lens.FieldOfView = playerStats.firstZoomFov;
-
+        zoomControl.Init();
         // subscribe to input events
         EnableInputs();
     }
@@ -53,9 +49,7 @@ public class PlayerController : MonoBehaviour
         isMovementEnabled = false;
     }
 
-    /// <summary>
     /// Called by InputEventChannel when X-axis input is received.
-    /// </summary>
     private void HandleTurretRotate(float inputX)
     {
         if (!isMovementEnabled) return;
@@ -65,9 +59,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    /// <summary>
     /// Called by InputEventChannel when Y-axis input is received.
-    /// </summary>
     private void HandleGunElevate(float inputY)
     {
         if (!isMovementEnabled) return;
@@ -77,9 +69,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    /// <summary>
     /// Updates stats to the turret and cannon from the Player values.
-    /// </summary>
     public void UpdateMovementStats()
     {
         if (turret != null) turret.UpdateHorizontalStats();
