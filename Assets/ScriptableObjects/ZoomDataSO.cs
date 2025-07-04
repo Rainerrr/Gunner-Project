@@ -36,6 +36,7 @@ public class ZoomDataSO : ScriptableObject
         };
 
         currentZoomLevel = 0f;
+        
         RaiseEvent();
     }
 

@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         zoomControl.Init();
+        HandleZoomChanged(playerStats.firstZoomFov,playerStats.baseCrosshairScaleMultiplier, playerStats.firstZoomSpeed);
         if (zoomData != null)
         {
             zoomData.OnZoomChanged += HandleZoomChanged;
