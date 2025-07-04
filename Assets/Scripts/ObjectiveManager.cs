@@ -30,8 +30,16 @@ public class ObjectiveManager : MonoBehaviour
     public readonly List<ObjectiveStage> stages = new List<ObjectiveStage>();
     public int currentStageIndex = -1;
 
-    private void Start()
+    private void Awake()
     {
+    
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    
         BuildStageList();
         StartNextStage();
     }
