@@ -1,39 +1,59 @@
+using System;
 using UnityEngine;
 
-public class CornerCheck : Objective
+/// <summary>
+/// Objective that is completed once the player "hits" four target corners
+/// with the laser object. Each corner must have a collider component.
+/// </summary>
+public class CornerCheck : MonoBehaviour, IObjective
 {
     [Header("Corners to check")]
     public Transform[] cornerTransforms = new Transform[4];
 
     [Header("Laser object that triggers collisions")]
     public GameObject lastLaser;
+
+    // Flags that track which corners have been hit
     [HideInInspector] public bool[] cornerFlag = new bool[4];
-    public bool completed = false;
 
-    // Internal: cache collider references
+    // Internal cached colliders for quick lookup
     private Collider laserCollider;
-    private Collider[] cornerColliders = new Collider[4];
+    private readonly Collider[] cornerColliders = new Collider[4];
 
-    void Awake()
+    public event Action OnCompleted;
+
+    private void Awake()
     {
-        // Cache the laser's Collider component
+        // Find laser collider
         lastLaser = GameObject.Find("LastLaser");
-        laserCollider = lastLaser.GetComponent<Collider>();
+        laserCollider = lastLaser != null ? lastLaser.GetComponent<Collider>() : null;
 
-        // Cache each corner's Collider component
+        // Cache corner colliders
         for (int i = 0; i < cornerColliders.Length; i++)
         {
-            cornerColliders[i] = cornerTransforms[i].GetComponent<Collider>();
-            if (cornerColliders[i] == null)
-                Debug.LogError($"Corner {i + 1} is missing a Collider!");
+            if (cornerTransforms[i] != null)
+            {
+                cornerColliders[i] = cornerTransforms[i].GetComponent<Collider>();
+                if (cornerColliders[i] == null)
+                    Debug.LogError($"Corner {i + 1} is missing a Collider!");
+            }
         }
+
+        // Start disabled until the manager activates us
+        enabled = false;
     }
 
-    void FixedUpdate()
+    public void Activate()
     {
-        if (completed) return;
+        // Called by the ObjectiveManager when this objective becomes active
+        enabled = true;
+    }
 
-        // For each corner not yet hit, check for intersection
+    private void FixedUpdate()
+    {
+        if (laserCollider == null) return;
+
+        // Check each corner that has not been hit yet
         for (int i = 0; i < cornerFlag.Length; i++)
         {
             if (!cornerFlag[i] && IsIntersecting(cornerColliders[i], laserCollider))
@@ -43,22 +63,22 @@ public class CornerCheck : Objective
             }
         }
 
-        // If all corners have been hit, mark as completed
+        // If all corners were hit we complete the objective
         if (cornerFlag[0] && cornerFlag[1] && cornerFlag[2] && cornerFlag[3])
         {
-            Complete();
+            CompleteObjective();
         }
     }
 
-    bool IsIntersecting(Collider a, Collider b)
+    private bool IsIntersecting(Collider a, Collider b)
     {
-        Bounds boundA = a.bounds;
-        return boundA.Intersects(b.bounds);
+        return a != null && b != null && a.bounds.Intersects(b.bounds);
     }
-    protected override void OnObjectiveCompleted()
+
+    private void CompleteObjective()
     {
-        base.OnObjectiveCompleted();
-        Destroy(gameObject);         
+        enabled = false;
+        OnCompleted?.Invoke();
+        Destroy(gameObject);
     }
 }
-
