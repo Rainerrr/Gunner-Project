@@ -74,7 +74,7 @@ public class TargetBank : MonoBehaviour
         if (newBank == null)
             return;
 
-        TargetBankSO.ActiveBank = newBank;
+        newBank.RegisterSceneBank();
         bankData = newBank;
         runtimeTargets.Clear();
     }

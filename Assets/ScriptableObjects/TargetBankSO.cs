@@ -9,8 +9,8 @@ public class TargetBankSO : ScriptableObject
 
     [NonSerialized] public List<Target> targets = new List<Target>();
 
-    public event Action<Target> OnTargetAdded;
-    public event Action<Target> OnTargetRemoved;
+    public Action<Target> OnTargetAdded;
+    public Action<Target> OnTargetRemoved;
 
     public void RegisterSceneBank()
     {
