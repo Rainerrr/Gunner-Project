@@ -2,12 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[System.Serializable]
-public class TargetTypeToggle
-{
-    public Toggle toggle;
-    public TargetType targetType;
-}
 
 public class TargetCreatorUI : MonoBehaviour
 {
@@ -17,7 +11,7 @@ public class TargetCreatorUI : MonoBehaviour
     [SerializeField] private Transform lastLaser;
 
     [Header("Target Type Toggles")]
-    [SerializeField] private List<TargetTypeToggle> targetToggles = new List<TargetTypeToggle>();
+    [SerializeField] private List<TargetTypeToggleInfo> targetToggles = new List<TargetTypeToggleInfo>();
     [SerializeField] private string targetNamePrefix = "Target";
 
     private TargetType? selectedType = null;
@@ -34,12 +28,12 @@ public class TargetCreatorUI : MonoBehaviour
                 lastLaser = go.transform;
         }
 
-        foreach (var pair in targetToggles)
+        foreach (var info in targetToggles)
         {
-            if (pair.toggle == null)
+            if (info == null || info.Toggle == null)
                 continue;
-            TargetType localType = pair.targetType;
-            pair.toggle.onValueChanged.AddListener(isOn => OnToggleChanged(localType, isOn));
+            TargetType localType = info.Type;
+            info.Toggle.onValueChanged.AddListener(isOn => OnToggleChanged(localType, isOn));
         }
     }
 
@@ -73,10 +67,10 @@ public class TargetCreatorUI : MonoBehaviour
         targetBank.CreateNewTarget(name, selectedType.Value, spawnPos, string.Empty);
 
         selectedType = null;
-        foreach (var pair in targetToggles)
+        foreach (var info in targetToggles)
         {
-            if (pair.toggle != null)
-                pair.toggle.SetIsOnWithoutNotify(false);
+            if (info != null && info.Toggle != null)
+                info.Toggle.SetIsOnWithoutNotify(false);
         }
     }
 }
