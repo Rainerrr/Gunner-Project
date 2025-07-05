@@ -7,7 +7,7 @@ public class TargetBankSO : ScriptableObject
 {
     public static TargetBankSO ActiveBank { get; private set; }
 
-    public List<Target> targets = new List<Target>();
+    [NonSerialized] public List<Target> targets = new List<Target>();
 
     public event Action<Target> OnTargetAdded;
     public event Action<Target> OnTargetRemoved;
@@ -15,24 +15,16 @@ public class TargetBankSO : ScriptableObject
     public void RegisterSceneBank()
     {
         ActiveBank = this;
-        Clear();
     }
 
     public void AddTarget(Target target)
     {
-        if (!targets.Contains(target))
-        {
-            targets.Add(target);
-            OnTargetAdded?.Invoke(target);
-        }
+        TargetBank.Instance?.AddTarget(target);
     }
 
     public void RemoveTarget(Target target)
     {
-        if (targets.Remove(target))
-        {
-            OnTargetRemoved?.Invoke(target);
-        }
+        TargetBank.Instance?.RemoveTarget(target);
     }
 
     public void Clear()

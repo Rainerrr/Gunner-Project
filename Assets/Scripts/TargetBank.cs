@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class TargetBank : MonoBehaviour
 {
+    public static TargetBank Instance;
+
     [SerializeField] private GameObject targetPrefab;
     [SerializeField] private Transform newTargetPositon;
     [SerializeField] public RangeFind rangeFind;
@@ -13,6 +15,8 @@ public class TargetBank : MonoBehaviour
     [SerializeField] public MapContentBehavior mapContentBehavior;
     [SerializeField] public Turret turret;
     [SerializeField] private TargetBankSO bankData;
+
+    public List<Target> runtimeTargets = new List<Target>();
 
     /// Creates a new Target instance and adds it to the bank
     public Target CreateNewTarget(string name, TargetType targetType, Vector3 worldPosition, string description)
@@ -40,14 +44,20 @@ public class TargetBank : MonoBehaviour
         t.description = description;
 
         // 4. Add to the list
-        if (bankData != null)
-            bankData.AddTarget(t);
+        AddTarget(t);
         return t;
     }
     private void Awake()
     {
-        if (bankData != null)
-            bankData.RegisterSceneBank();
+        if (Instance != null && Instance != this)
+        {
+            Instance.RegisterSceneBank(bankData);
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+        RegisterSceneBank(bankData);
     }
 
     void Start()
@@ -56,6 +66,36 @@ public class TargetBank : MonoBehaviour
     }
     void Update()
     {
-        
+
+    }
+
+    public void RegisterSceneBank(TargetBankSO newBank)
+    {
+        if (newBank == null)
+            return;
+
+        TargetBankSO.ActiveBank = newBank;
+        bankData = newBank;
+        runtimeTargets.Clear();
+    }
+
+    public void AddTarget(Target target)
+    {
+        if (target == null || runtimeTargets.Contains(target))
+            return;
+
+        runtimeTargets.Add(target);
+        bankData?.OnTargetAdded?.Invoke(target);
+    }
+
+    public void RemoveTarget(Target target)
+    {
+        if (target == null)
+            return;
+
+        if (runtimeTargets.Remove(target))
+        {
+            bankData?.OnTargetRemoved?.Invoke(target);
+        }
     }
 }
