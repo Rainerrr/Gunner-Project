@@ -45,14 +45,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c1643e7055cccd438b1f5c5d05819dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectiveTitle: New Objective
-  objectiveDescription: 
-  targetName: 
+  objectiveTitle: New Target!
+  objectiveDescription: open the map to view
+  targetName: Water Tower
   type: 0
-  description: 
+  description: very threatening water tower
   targetPosition: {fileID: 1290405377507378708}
   toggle: {fileID: 0}
-  toggleGameObject: {fileID: 0}
   targetBank: {fileID: 0}
 --- !u!1 &9162457530212797135
 GameObject:
@@ -78,8 +77,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9162457530212797135}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.17089866, y: -0.48156637, z: 0.0962156, w: -0.85418385}
+  m_LocalPosition: {x: 1604.18, y: -118.28, z: 427.14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

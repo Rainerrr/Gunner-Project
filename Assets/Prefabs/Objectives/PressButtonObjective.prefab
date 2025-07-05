@@ -27,14 +27,14 @@ RectTransform:
   m_GameObject: {fileID: 3305717701753127337}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: -0.44, y: -0.44, z: -0.44}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1653249187025176696}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 213, y: 0}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -42.22, y: -236}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1703249251668040063
@@ -187,7 +187,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d412dc4dbecde1b4eb5ff203e223422d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectiveTitle: have totah
-  objectiveDescription: 
+  objectiveTitle: "\u05D7\u05EA\u05D5\u05EA \u05D0\u05D1\u05D4"
+  objectiveDescription: "\u05D7\u05EA\u05D5\u05EA \u05D0\u05D1\u05D4\u05D5 ,\u05EA\u05DC\u05E2\u05E9
+    \u05D4\u05E8\u05D8\u05DE\u05D4 \u05DF\u05D5\u05E7\u05D9\u05D9\u05D0 \u05DC\u05E2
+    \u05E5\u05D7\u05DC \u05E7\"\u05E0\u05E2\u05DE\u05D4 \u05EA\u05E4\u05DE \u05EA\u05D0
+    \u05D7\u05EA\u05E4"
   button: {fileID: 0}
   buttonGameObject: {fileID: 0}

@@ -15,7 +15,7 @@ public class PressButtonObjective : Objective
         // Called by the ObjectiveManager when this objective becomes active
         enabled = true;
         // 1) Make sure the name is exact (including "(Clone)" if it’s a spawned prefab)
-        buttonGameObject = GameObject.Find("TargetIconPrefab(Clone)");
+        buttonGameObject = GameObject.Find("Water TowerIcon");
         if (buttonGameObject == null)
         {
             // Debug.LogError("TargetIconPrefab(Clone) not found in the Hierarchy!");
@@ -30,7 +30,7 @@ public class PressButtonObjective : Objective
             button = buttonGameObject.GetComponentInChildren<Button>();
             if (button == null)
             {
-                Debug.LogError("No Button found on TargetIconPrefab(Clone) or its children!");
+                Debug.LogError("No Button found on Water Tower or its children!");
                 return;
             }
         }

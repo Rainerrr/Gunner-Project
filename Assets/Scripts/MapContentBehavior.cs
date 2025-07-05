@@ -11,7 +11,6 @@ public class MapContentBehavior : MonoBehaviour
     [SerializeField] private RangeDataSO rangeData;
     [SerializeField] private AzimuthDataSO azimuthData;
 
-
     [SerializeField] public float MapScaleFactor = 0.1f;
     [SerializeField] private GameObject scalecalculation;
     [SerializeField] private RawImage scaleRangeFinder;
@@ -36,20 +35,23 @@ public class MapContentBehavior : MonoBehaviour
         {
             RectTransform icon = Instantiate(ATiconPrefab, mapTargetBank);
             icon.localPosition = localInContent;
+            icon.name = target.name + "Icon";
             return icon.gameObject.GetComponent<TargetIcon>();
         }
         else if (target.type == TargetType.safam)
         {
             RectTransform icon = Instantiate(SafamiconPrefab, mapTargetBank);
             icon.localPosition = localInContent;
+            icon.name = target.name + "Icon";
             return icon.gameObject.GetComponent<TargetIcon>();
+            
         }
         else
         {
             UnityEngine.Debug.Log("null map icon");
             return null;
         }
-
+    
     }
     public void UpdateLaserIndicator(int range)
     {

@@ -28,8 +28,8 @@ Transform:
   m_GameObject: {fileID: 407189195434456151}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.56, y: 1.31, z: -11.54}
-  m_LocalScale: {x: 2.985378, y: 2.985378, z: 0.90836096}
+  m_LocalPosition: {x: 14.88, y: 6.56, z: -11.54}
+  m_LocalScale: {x: 2.0551033, y: 2.2056272, z: 0.90836096}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1003893094916739638}
@@ -133,8 +133,8 @@ Transform:
   m_GameObject: {fileID: 1320152471726527667}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.91, y: 8.12, z: -11.54}
-  m_LocalScale: {x: 2.985378, y: 2.985378, z: 0.90836096}
+  m_LocalPosition: {x: 17.12, y: 8.54, z: -11.54}
+  m_LocalScale: {x: 2.985378, y: 1.4720899, z: 0.90836096}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1003893094916739638}
@@ -238,8 +238,8 @@ Transform:
   m_GameObject: {fileID: 7930541256829083474}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.82, y: 4.65, z: -11.54}
-  m_LocalScale: {x: 2.985378, y: 2.985378, z: 0.90836096}
+  m_LocalPosition: {x: 19.11, y: 6.17, z: -11.54}
+  m_LocalScale: {x: 1.6508805, y: 3.0274718, z: 0.9211688}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1003893094916739638}
@@ -343,8 +343,8 @@ Transform:
   m_GameObject: {fileID: 8556773086651888531}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.03, y: 4.52, z: -11.54}
-  m_LocalScale: {x: 2.985378, y: 2.985378, z: 0.90836096}
+  m_LocalPosition: {x: 17.13, y: 4.22, z: -11.54}
+  m_LocalScale: {x: 2.985378, y: 1.5409328, z: 0.31139523}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1003893094916739638}
@@ -445,7 +445,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8885175860901398232}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.29578897, z: -0, w: 0.9552533}
+  m_LocalRotation: {x: 0, y: -0.2957914, z: 0, w: 0.9552526}
   m_LocalPosition: {x: 1549.83, y: 228, z: 481.35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -468,7 +468,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac4001a827c8dca4285be275835bb06a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectiveTitle: New Objective
+  objectiveTitle: right aim
   objectiveDescription: 
   cornerTransforms:
   - {fileID: 4299563250930840944}

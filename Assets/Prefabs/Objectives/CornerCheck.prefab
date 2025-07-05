@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 1320152471726527667}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.82, y: 1.31, z: -11.54}
+  m_LocalPosition: {x: 10.82, y: -0.15, z: -11.54}
   m_LocalScale: {x: 2.985378, y: 2.985378, z: 0.90836096}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -238,7 +238,7 @@ Transform:
   m_GameObject: {fileID: 4105085786953715057}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.42, y: 1.31, z: -11.54}
+  m_LocalPosition: {x: 3.42, y: 0.25, z: -11.54}
   m_LocalScale: {x: 2.985378, y: 2.985378, z: 0.90836096}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -445,7 +445,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8885175860901398232}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.29578897, z: -0, w: 0.9552533}
+  m_LocalRotation: {x: 0, y: -0.2957914, z: 0, w: 0.9552526}
   m_LocalPosition: {x: 1549.83, y: 228, z: 481.35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -468,8 +468,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce2fa3d0a7759db43a5c7063892f0000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectiveTitle: New Objective
-  objectiveDescription: 
+  objectiveTitle: Laser Range
+  objectiveDescription: "\u05E4\u05EA\u05D7 \u05D0\u05EA \u05DE\u05E4\u05EA \u05D4\u05DE\u05E2\u05E0\"\u05E7
+    \u05DC\u05D7\u05E5 \u05E2\u05DC \u05D0\u05D9\u05D9\u05E7\u05D5\u05DF \u05D4\u05DE\u05D8\u05E8\u05D4
+    \u05E9\u05E2\u05DC\u05EA, \u05D5\u05D4\u05D1\u05D0 \u05EA\u05D5\u05EA\u05D7"
   cornerTransforms:
   - {fileID: 4299563250930840944}
   - {fileID: 8730734067551997513}
