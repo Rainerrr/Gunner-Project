@@ -17,7 +17,6 @@ public class NewTargetObjective : Objective
 
     [Header("toggle to press")]
     [SerializeField] private Toggle toggle;
-    [SerializeField] private GameObject toggleGameObject;
     [SerializeField] private TargetBank targetBank;
 
     public override void Activate()

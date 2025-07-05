@@ -32,15 +32,7 @@ public class Target : MonoBehaviour
 
         this.azimuth = Mathf.RoundToInt(azimuthFind.GetAzimuthToTarget(targetObject.transform));
         this.range = rangeFind.GetRangeToTarget(targetObject.transform);
-
-        if (targetType == TargetType.Enemy)
-        {
-            targetIcon = mapContentBehavior.AddTargetToMap(this);
-        }
-        else
-        {
-            UnityEngine.Debug.Log("null map icon");
-        }
+        targetIcon = mapContentBehavior.AddTargetToMap(this);
         if (targetIcon != null)
         {
             targetIcon.linkedTarget = this;
@@ -61,6 +53,6 @@ public class Target : MonoBehaviour
 public enum TargetType
 {
     Enemy,
-    Ally,
+    safam,
     Objective
 }

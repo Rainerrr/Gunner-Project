@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5742207538504191854}
   - component: {fileID: -8287641945723875418}
   m_Layer: 5
-  m_Name: TargetIconPrefab
+  m_Name: ATIconPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
