@@ -24,6 +24,7 @@ public class TargetBank : MonoBehaviour
         }
         // 1. Instantiate the prefab at the desired position
         GameObject go = Instantiate(targetPrefab, worldPosition, Quaternion.identity, transform);
+        go.name = name;
 
         // 2. Retrieve and initialize the Target component
         Target t = go.GetComponent<Target>();
@@ -41,9 +42,6 @@ public class TargetBank : MonoBehaviour
         // 4. Add to the list
         if (bankData != null)
             bankData.AddTarget(t);
-        if (ObjectiveManager.Instance.stages[ObjectiveManager.Instance.currentStageIndex].objective is PressButtonObjective) {
-            ObjectiveManager.Instance.stages[ObjectiveManager.Instance.currentStageIndex].objective.Activate();
-        }
         return t;
     }
     private void Awake()
@@ -54,9 +52,7 @@ public class TargetBank : MonoBehaviour
 
     void Start()
     {
-        CreateNewTarget("Alpha", TargetType.Enemy, newTargetPositon.position, "test target");
-        if (bankData != null && bankData.targets.Count > 0)
-            turret.RotateToTarget(bankData.targets[0]);
+
     }
     void Update()
     {
