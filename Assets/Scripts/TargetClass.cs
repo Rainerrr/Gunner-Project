@@ -1,12 +1,9 @@
-using System.Diagnostics;
 using UnityEngine;
-using UnityEngine.Animations;
 using UnityEngine.UI;
 
 public class Target : MonoBehaviour
 {
     public MapContentBehavior mapContentBehavior;
-    public TargetBank targetBank;
     [Header("Target Settings")]
     public string targetName;
     public TargetType type;
@@ -25,18 +22,16 @@ public class Target : MonoBehaviour
 
     [HideInInspector] public bool destroyed = false;
     [HideInInspector] public bool isActive = true;
-    public void Init(string name, TargetType targetType, GameObject targetObject)
+    public void Init(string name, TargetType targetType, GameObject targetObject, RangeFind rangeFind, AzimuthFind azimuthFind, MapContentBehavior mapContent)
     {
-        this.targetBank = transform.parent.GetComponent<TargetBank>();
-        this.mapContentBehavior = FindObjectOfType<MapContentBehavior>();
-
+        this.mapContentBehavior = mapContent;
 
         this.targetName = name;
         this.type = targetType;
         this.targetObject = targetObject;
 
-        this.azimuth = Mathf.RoundToInt(targetBank.azimuthFind.GetAzimuthToTarget(targetObject.transform));
-        this.range = targetBank.rangeFind.GetRangeToTarget(targetObject.transform);
+        this.azimuth = Mathf.RoundToInt(azimuthFind.GetAzimuthToTarget(targetObject.transform));
+        this.range = rangeFind.GetRangeToTarget(targetObject.transform);
 
         if (targetType == TargetType.Enemy)
         {
@@ -52,10 +47,7 @@ public class Target : MonoBehaviour
         }
 
     }
-    private void RotateToThisTarget()
-    {
-        targetBank.turret.RotateToTarget(this);
-    }
+
     private void Start()
     {
     }

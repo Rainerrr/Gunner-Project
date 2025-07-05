@@ -12,9 +12,9 @@ public class TargetBank : MonoBehaviour
     [SerializeField] public AzimuthFind azimuthFind;
     [SerializeField] public MapContentBehavior mapContentBehavior;
     [SerializeField] public Turret turret;
-    public List<Target> targetList;
+    [SerializeField] private TargetBankSO bankData;
 
-    /// Creates a new Target instance and adds it to targetList
+    /// Creates a new Target instance and adds it to the bank
     public Target CreateNewTarget(string name, TargetType targetType, Vector3 worldPosition, string description)
     {
         if (targetPrefab == null)
@@ -35,20 +35,28 @@ public class TargetBank : MonoBehaviour
         }
         // 3. Call Init
 
-        t.Init(name, targetType, go);
+        t.Init(name, targetType, go, rangeFind, azimuthFind, mapContentBehavior);
         t.description = description;
 
         // 4. Add to the list
-        targetList.Add(t);
+        if (bankData != null)
+            bankData.AddTarget(t);
         if (ObjectiveManager.Instance.stages[ObjectiveManager.Instance.currentStageIndex].objective is PressButtonObjective) {
             ObjectiveManager.Instance.stages[ObjectiveManager.Instance.currentStageIndex].objective.Activate();
         }
         return t;
     }
+    private void Awake()
+    {
+        if (bankData != null)
+            bankData.RegisterSceneBank();
+    }
+
     void Start()
     {
         CreateNewTarget("Alpha", TargetType.Enemy, newTargetPositon.position, "test target");
-        turret.RotateToTarget(targetList[0]);
+        if (bankData != null && bankData.targets.Count > 0)
+            turret.RotateToTarget(bankData.targets[0]);
     }
     void Update()
     {

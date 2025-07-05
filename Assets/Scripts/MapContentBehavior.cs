@@ -7,7 +7,6 @@ using UnityEngine.UIElements;
 
 public class MapContentBehavior : MonoBehaviour
 {
-    [SerializeField] public TargetBank targetBank;
     [SerializeField] public RangeFind rangeFind;
     [SerializeField]  private AzimuthFind azimuthFind;
 
