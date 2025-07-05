@@ -468,8 +468,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac4001a827c8dca4285be275835bb06a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectiveTitle: right aim
-  objectiveDescription: 
+  objectiveTitle: Aim
+  objectiveDescription: aim to the right place on the building and get range
   cornerTransforms:
   - {fileID: 4299563250930840944}
   - {fileID: 735499975352056903}
