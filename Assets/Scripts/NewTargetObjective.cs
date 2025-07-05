@@ -22,8 +22,11 @@ public class NewTargetObjective : Objective
 
     public override void Activate()
     {
-        targetBank = FindObjectOfType<TargetBank>();
-        targetBank.CreateNewTarget(targetName, type, targetPosition.position, description);
+        targetBank = TargetBank.Instance;
+        if (targetBank != null)
+            targetBank.CreateNewTarget(targetName, type, targetPosition.position, description);
+        else
+            Debug.LogError("NewTargetObjective: TargetBank instance not found");
         // Called by the ObjectiveManager when this objective becomes active
         enabled = true;
         
