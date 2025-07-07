@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class TargetTypeToggleInfo : MonoBehaviour
 {
     [SerializeField] private Toggle toggle;
-    [SerializeField] private TargetType targetType;
+    [SerializeField] public TargetType targetType;
 
     public Toggle Toggle => toggle;
     public TargetType Type => targetType;
