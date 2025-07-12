@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FireEvent : MonoBehaviour
 {
+    [SerializeField] public ParticleSystem smoke;
     [SerializeField] private RangeDataSO rangeData;
     [SerializeField] private InputEventChannelSO inputEventChannel;
     [SerializeField] GameObject shellPrefab;
@@ -29,8 +30,15 @@ public class FireEvent : MonoBehaviour
         if (!rangeData.isSrak)
         {
             ballisticCurve.LockTrajectory();
-            GameObject shell = CreateFromPrefab(shellPrefab,transform.position, shellPrefab.transform.rotation);
+            GameObject shell = CreateFromPrefab(shellPrefab, transform.position, shellPrefab.transform.rotation);
             shell.GetComponent<ProjectileBehavior>().SetBallisticCurve(ballisticCurve);
+            ParticleSystem fx = Instantiate(
+            smoke,
+            transform.position,
+            transform.rotation
+            );
+            Destroy(fx, 2f);
+
         }
 
     }

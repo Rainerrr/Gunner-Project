@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ProjectileBehavior : MonoBehaviour
 {
+    [SerializeField] public ParticleSystem explosion;
+
     [SerializeField] public BallisticCurve ballisticCurve;
     [SerializeField] public float speed;
     private float sampleTime;
@@ -30,5 +32,13 @@ public class ProjectileBehavior : MonoBehaviour
             Destroy(gameObject);
         }
 
+    }
+    void OnDestroy()
+    {
+        ParticleSystem fx = Instantiate(
+            explosion, 
+            transform.position, 
+            transform.rotation
+        );
     }
 }
