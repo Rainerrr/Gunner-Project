@@ -30,9 +30,12 @@ public class ObjectiveUiManager : MonoBehaviour
     {
         if (objectiveManager == null)
             return;
-
         if (objectiveManager.TryGetStage(currentStageIndex, out var stage))
         {
+            if (stage.objective.Completed)
+            {
+                AdvanceAfterDelay();
+            }
             currentUi = Instantiate(objectiveUiPrefab, this.transform);
             currentUi.Init(stage.objective);
             stage.onStageCompleted.AddListener(OnStageCompleted);
